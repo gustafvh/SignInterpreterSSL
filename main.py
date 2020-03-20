@@ -1,5 +1,3 @@
-# https://towardsdatascience.com/keras-transfer-learning-for-beginners-6c9b8b7143e
-
 import pandas as pd
 import numpy as np
 import os
