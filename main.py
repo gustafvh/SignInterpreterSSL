@@ -12,15 +12,21 @@ from skimage import transform
 
 from keras.layers import Dense,GlobalAveragePooling2D
 from keras.applications import MobileNet
-from keras.preprocessing import image
 from keras.applications.mobilenet import preprocess_input
 from keras.preprocessing.image import ImageDataGenerator
 from keras.models import Model
 from keras.models import model_from_json
-from keras.optimizers import Adam
+
+import cv2
 
 
-def getModel():
+#### Variables ######
+
+TRAINING_DATA_SET_PATH = './data/asl-alphabet/asl_alphabet_train/asl_alphabet_train'
+
+
+
+def getPreTrainedModel():
     base_model=MobileNet(weights='imagenet',include_top=False) #imports the mobilenet model and discards the last 1000 neuron layer.
 
     x=base_model.output
@@ -43,7 +49,7 @@ def freezeLayers(numOfLayers, model):
 def fitModel(model):
     train_datagen=ImageDataGenerator(preprocessing_function=preprocess_input) #included in our dependencies
 
-    train_generator=train_datagen.flow_from_directory('./data/asl-alphabet/asl_alphabet_train/asl_alphabet_train', # this is where you specify the path to the main data folder
+    train_generator=train_datagen.flow_from_directory(TRAINING_DATA_SET_PATH, # this is where you specify the path to the main data folder
                                                       target_size=(224,224),
                                                       color_mode='rgb',
                                                       batch_size=32,
@@ -90,16 +96,43 @@ def loadSingleImage(filename):
     return np_image
 
 
+def trainNetwork():
+    preTrainedModel = getPreTrainedModel()
+    trimmedModel = freezeLayers(20, preTrainedModel)
+    finalModel = fitModel(trimmedModel)
+    saveModelToJson(finalModel)
+    return finalModel
 
+
+def showImageCV(preds):
+    # find the class label index with the largest corresponding
+    # probability
+    i = preds.argmax(axis=1)[0]
+    label = 'C'
+    # label = lb.classes_[i]
+    # draw the class label + probability on the output image
+    text = "{}: {:.2f}%".format(label, preds[0][i] * 100)
+
+    image = cv2.imread('./data/asl-alphabet/asl_alphabet_train/asl_alphabet_train/C/C1.jpg')
+    output = image.copy()
+    cv2.putText(output, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7,
+                (0, 0, 255), 2)
+    # show the output image
+    cv2.imshow("Image", output)
+    cv2.waitKey(0)
 
 def mainPipeline():
-    # preTrainedModel = getModel()
-    # trimmedModel = freezeLayers(20, preTrainedModel)
-    # finalModel = fitModel(trimmedModel)
-    # saveModelToJson(finalModel)
+    #finalModel = trainNetwork()
     finalModel = loadModelfromJson('./output/model.json', './output/model.h5')
-    image = loadSingleImage('./data/hand-gestures-dataset/test/a/A4.jpg')
-    print(finalModel.predict(image))
+    image = loadSingleImage('./data/asl-alphabet/asl_alphabet_train/asl_alphabet_train/C/C1.jpg')
+    predictions = finalModel.predict(image)
+    # Predictions contains a 2D array where the index of the
+    # images sent in (so for a single image its only a
+    # prediction[0]) and in that array is the prediction score for
+    # each class A,B,C
+    print(predictions)
+    print(predictions.astype('int'))
+    showImageCV(predictions)
 
 
 mainPipeline()
