@@ -1,0 +1,355 @@
+./
+|-- (old)
+|   |-- finetune.py
+|   |-- imagePre.py
+|   |-- load-test-cnn.py
+|   `-- test-cnn.py
+|-- README.md
+|-- data
+|   |-- asl-alphabet
+|   |   |-- asl_alphabet_test
+|   |   |   `-- asl_alphabet_test
+|   |   |       |-- A_test.jpg
+|   |   |       |-- B_test.jpg
+|   |   |       `-- C_test.jpg
+|   |   `-- asl_alphabet_train
+|   |       `-- asl_alphabet_train
+|   |           |-- A
+|   |           |   |-- A1.jpg
+|   |           |   |-- A10.jpg
+|   |           |   |-- A100.jpg
+|   |           |   |-- A11.jpg
+|   |           |   |-- A12.jpg
+|   |           |   |-- A13.jpg
+|   |           |   |-- A14.jpg
+|   |           |   |-- A15.jpg
+|   |           |   |-- A16.jpg
+|   |           |   |-- A17.jpg
+|   |           |   |-- A18.jpg
+|   |           |   |-- A19.jpg
+|   |           |   |-- A2.jpg
+|   |           |   |-- A20.jpg
+|   |           |   |-- A21.jpg
+|   |           |   |-- A22.jpg
+|   |           |   |-- A23.jpg
+|   |           |   |-- A24.jpg
+|   |           |   |-- A25.jpg
+|   |           |   |-- A26.jpg
+|   |           |   |-- A27.jpg
+|   |           |   |-- A28.jpg
+|   |           |   |-- A29.jpg
+|   |           |   |-- A3.jpg
+|   |           |   |-- A30.jpg
+|   |           |   |-- A31.jpg
+|   |           |   |-- A32.jpg
+|   |           |   |-- A33.jpg
+|   |           |   |-- A34.jpg
+|   |           |   |-- A35.jpg
+|   |           |   |-- A36.jpg
+|   |           |   |-- A37.jpg
+|   |           |   |-- A38.jpg
+|   |           |   |-- A39.jpg
+|   |           |   |-- A4.jpg
+|   |           |   |-- A40.jpg
+|   |           |   |-- A41.jpg
+|   |           |   |-- A42.jpg
+|   |           |   |-- A43.jpg
+|   |           |   |-- A44.jpg
+|   |           |   |-- A45.jpg
+|   |           |   |-- A46.jpg
+|   |           |   |-- A47.jpg
+|   |           |   |-- A48.jpg
+|   |           |   |-- A49.jpg
+|   |           |   |-- A5.jpg
+|   |           |   |-- A50.jpg
+|   |           |   |-- A51.jpg
+|   |           |   |-- A52.jpg
+|   |           |   |-- A53.jpg
+|   |           |   |-- A54.jpg
+|   |           |   |-- A55.jpg
+|   |           |   |-- A56.jpg
+|   |           |   |-- A57.jpg
+|   |           |   |-- A58.jpg
+|   |           |   |-- A59.jpg
+|   |           |   |-- A6.jpg
+|   |           |   |-- A60.jpg
+|   |           |   |-- A61.jpg
+|   |           |   |-- A62.jpg
+|   |           |   |-- A63.jpg
+|   |           |   |-- A64.jpg
+|   |           |   |-- A65.jpg
+|   |           |   |-- A66.jpg
+|   |           |   |-- A67.jpg
+|   |           |   |-- A68.jpg
+|   |           |   |-- A69.jpg
+|   |           |   |-- A7.jpg
+|   |           |   |-- A70.jpg
+|   |           |   |-- A71.jpg
+|   |           |   |-- A72.jpg
+|   |           |   |-- A73.jpg
+|   |           |   |-- A74.jpg
+|   |           |   |-- A75.jpg
+|   |           |   |-- A76.jpg
+|   |           |   |-- A77.jpg
+|   |           |   |-- A78.jpg
+|   |           |   |-- A79.jpg
+|   |           |   |-- A8.jpg
+|   |           |   |-- A80.jpg
+|   |           |   |-- A81.jpg
+|   |           |   |-- A82.jpg
+|   |           |   |-- A83.jpg
+|   |           |   |-- A84.jpg
+|   |           |   |-- A85.jpg
+|   |           |   |-- A86.jpg
+|   |           |   |-- A87.jpg
+|   |           |   |-- A88.jpg
+|   |           |   |-- A89.jpg
+|   |           |   |-- A9.jpg
+|   |           |   |-- A90.jpg
+|   |           |   |-- A91.jpg
+|   |           |   |-- A92.jpg
+|   |           |   |-- A93.jpg
+|   |           |   |-- A94.jpg
+|   |           |   |-- A95.jpg
+|   |           |   |-- A96.jpg
+|   |           |   |-- A97.jpg
+|   |           |   |-- A98.jpg
+|   |           |   `-- A99.jpg
+|   |           |-- B
+|   |           |   |-- B1.jpg
+|   |           |   |-- B10.jpg
+|   |           |   |-- B100.jpg
+|   |           |   |-- B11.jpg
+|   |           |   |-- B12.jpg
+|   |           |   |-- B13.jpg
+|   |           |   |-- B14.jpg
+|   |           |   |-- B15.jpg
+|   |           |   |-- B16.jpg
+|   |           |   |-- B17.jpg
+|   |           |   |-- B18.jpg
+|   |           |   |-- B19.jpg
+|   |           |   |-- B2.jpg
+|   |           |   |-- B20.jpg
+|   |           |   |-- B21.jpg
+|   |           |   |-- B22.jpg
+|   |           |   |-- B23.jpg
+|   |           |   |-- B24.jpg
+|   |           |   |-- B25.jpg
+|   |           |   |-- B26.jpg
+|   |           |   |-- B27.jpg
+|   |           |   |-- B28.jpg
+|   |           |   |-- B29.jpg
+|   |           |   |-- B3.jpg
+|   |           |   |-- B30.jpg
+|   |           |   |-- B31.jpg
+|   |           |   |-- B32.jpg
+|   |           |   |-- B33.jpg
+|   |           |   |-- B34.jpg
+|   |           |   |-- B35.jpg
+|   |           |   |-- B36.jpg
+|   |           |   |-- B37.jpg
+|   |           |   |-- B38.jpg
+|   |           |   |-- B39.jpg
+|   |           |   |-- B4.jpg
+|   |           |   |-- B40.jpg
+|   |           |   |-- B41.jpg
+|   |           |   |-- B42.jpg
+|   |           |   |-- B43.jpg
+|   |           |   |-- B44.jpg
+|   |           |   |-- B45.jpg
+|   |           |   |-- B46.jpg
+|   |           |   |-- B47.jpg
+|   |           |   |-- B48.jpg
+|   |           |   |-- B49.jpg
+|   |           |   |-- B5.jpg
+|   |           |   |-- B50.jpg
+|   |           |   |-- B51.jpg
+|   |           |   |-- B52.jpg
+|   |           |   |-- B53.jpg
+|   |           |   |-- B54.jpg
+|   |           |   |-- B55.jpg
+|   |           |   |-- B56.jpg
+|   |           |   |-- B57.jpg
+|   |           |   |-- B58.jpg
+|   |           |   |-- B59.jpg
+|   |           |   |-- B6.jpg
+|   |           |   |-- B60.jpg
+|   |           |   |-- B61.jpg
+|   |           |   |-- B62.jpg
+|   |           |   |-- B63.jpg
+|   |           |   |-- B64.jpg
+|   |           |   |-- B65.jpg
+|   |           |   |-- B66.jpg
+|   |           |   |-- B67.jpg
+|   |           |   |-- B68.jpg
+|   |           |   |-- B69.jpg
+|   |           |   |-- B7.jpg
+|   |           |   |-- B70.jpg
+|   |           |   |-- B71.jpg
+|   |           |   |-- B72.jpg
+|   |           |   |-- B73.jpg
+|   |           |   |-- B74.jpg
+|   |           |   |-- B75.jpg
+|   |           |   |-- B76.jpg
+|   |           |   |-- B77.jpg
+|   |           |   |-- B78.jpg
+|   |           |   |-- B79.jpg
+|   |           |   |-- B8.jpg
+|   |           |   |-- B80.jpg
+|   |           |   |-- B81.jpg
+|   |           |   |-- B82.jpg
+|   |           |   |-- B83.jpg
+|   |           |   |-- B84.jpg
+|   |           |   |-- B85.jpg
+|   |           |   |-- B86.jpg
+|   |           |   |-- B87.jpg
+|   |           |   |-- B88.jpg
+|   |           |   |-- B89.jpg
+|   |           |   |-- B9.jpg
+|   |           |   |-- B90.jpg
+|   |           |   |-- B91.jpg
+|   |           |   |-- B92.jpg
+|   |           |   |-- B93.jpg
+|   |           |   |-- B94.jpg
+|   |           |   |-- B95.jpg
+|   |           |   |-- B96.jpg
+|   |           |   |-- B97.jpg
+|   |           |   |-- B98.jpg
+|   |           |   `-- B99.jpg
+|   |           `-- C
+|   |               |-- C1.jpg
+|   |               |-- C10.jpg
+|   |               |-- C100.jpg
+|   |               |-- C11.jpg
+|   |               |-- C12.jpg
+|   |               |-- C13.jpg
+|   |               |-- C14.jpg
+|   |               |-- C15.jpg
+|   |               |-- C16.jpg
+|   |               |-- C17.jpg
+|   |               |-- C18.jpg
+|   |               |-- C19.jpg
+|   |               |-- C2.jpg
+|   |               |-- C20.jpg
+|   |               |-- C21.jpg
+|   |               |-- C22.jpg
+|   |               |-- C23.jpg
+|   |               |-- C24.jpg
+|   |               |-- C25.jpg
+|   |               |-- C26.jpg
+|   |               |-- C27.jpg
+|   |               |-- C28.jpg
+|   |               |-- C29.jpg
+|   |               |-- C3.jpg
+|   |               |-- C30.jpg
+|   |               |-- C31.jpg
+|   |               |-- C32.jpg
+|   |               |-- C33.jpg
+|   |               |-- C34.jpg
+|   |               |-- C35.jpg
+|   |               |-- C36.jpg
+|   |               |-- C37.jpg
+|   |               |-- C38.jpg
+|   |               |-- C39.jpg
+|   |               |-- C4.jpg
+|   |               |-- C40.jpg
+|   |               |-- C41.jpg
+|   |               |-- C42.jpg
+|   |               |-- C43.jpg
+|   |               |-- C44.jpg
+|   |               |-- C45.jpg
+|   |               |-- C46.jpg
+|   |               |-- C47.jpg
+|   |               |-- C48.jpg
+|   |               |-- C49.jpg
+|   |               |-- C5.jpg
+|   |               |-- C50.jpg
+|   |               |-- C51.jpg
+|   |               |-- C52.jpg
+|   |               |-- C53.jpg
+|   |               |-- C54.jpg
+|   |               |-- C55.jpg
+|   |               |-- C56.jpg
+|   |               |-- C57.jpg
+|   |               |-- C58.jpg
+|   |               |-- C59.jpg
+|   |               |-- C6.jpg
+|   |               |-- C60.jpg
+|   |               |-- C61.jpg
+|   |               |-- C62.jpg
+|   |               |-- C63.jpg
+|   |               |-- C64.jpg
+|   |               |-- C65.jpg
+|   |               |-- C66.jpg
+|   |               |-- C67.jpg
+|   |               |-- C68.jpg
+|   |               |-- C69.jpg
+|   |               |-- C7.jpg
+|   |               |-- C70.jpg
+|   |               |-- C71.jpg
+|   |               |-- C72.jpg
+|   |               |-- C73.jpg
+|   |               |-- C74.jpg
+|   |               |-- C75.jpg
+|   |               |-- C76.jpg
+|   |               |-- C77.jpg
+|   |               |-- C78.jpg
+|   |               |-- C79.jpg
+|   |               |-- C8.jpg
+|   |               |-- C80.jpg
+|   |               |-- C81.jpg
+|   |               |-- C82.jpg
+|   |               |-- C83.jpg
+|   |               |-- C84.jpg
+|   |               |-- C85.jpg
+|   |               |-- C86.jpg
+|   |               |-- C87.jpg
+|   |               |-- C88.jpg
+|   |               |-- C89.jpg
+|   |               |-- C9.jpg
+|   |               |-- C90.jpg
+|   |               |-- C91.jpg
+|   |               |-- C92.jpg
+|   |               |-- C93.jpg
+|   |               |-- C94.jpg
+|   |               |-- C95.jpg
+|   |               |-- C96.jpg
+|   |               |-- C97.jpg
+|   |               |-- C98.jpg
+|   |               `-- C99.jpg
+|   |-- hand-gestures-dataset
+|   |   |-- test
+|   |   |   |-- a
+|   |   |   |   |-- A4.jpg
+|   |   |   |   |-- A5.jpg
+|   |   |   |   `-- A6.jpg
+|   |   |   `-- b
+|   |   |       |-- B4.jpg
+|   |   |       |-- B5.jpg
+|   |   |       `-- B6.jpg
+|   |   |-- train
+|   |   |   |-- a
+|   |   |   |   |-- A1.jpg
+|   |   |   |   |-- A2.jpg
+|   |   |   |   `-- A3.jpg
+|   |   |   `-- b
+|   |   |       |-- B1.jpg
+|   |   |       |-- B2.jpg
+|   |   |       `-- B3.jpg
+|   |   `-- validation
+|   |       |-- a
+|   |       |   |-- A7.jpg
+|   |       |   |-- A8.jpg
+|   |       |   `-- A9.jpg
+|   |       `-- b
+|   |           |-- B7.jpg
+|   |           |-- B8.jpg
+|   |           `-- B9.jpg
+|   `-- test-images
+|-- main.py
+|-- output
+|   |-- model.h5
+|   `-- model.json
+`-- result.txt
+
+22 directories, 330 files

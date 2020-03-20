@@ -90,6 +90,8 @@ def loadSingleImage(filename):
     return np_image
 
 
+
+
 def mainPipeline():
     # preTrainedModel = getModel()
     # trimmedModel = freezeLayers(20, preTrainedModel)
