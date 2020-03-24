@@ -24,7 +24,7 @@ img_rows, img_cols = 28, 28
 # the data, split between train and test sets
 # (x_train, y_train), (x_test, y_test) = mnist.load_data()
 
-TRAIN_DIR = "../data/hand-gestures-dataset/train"
+TRAIN_DIR = "../data/SSL-dataset/train"
 HEIGHT = 300
 WIDTH = 300
 BATCH_SIZE = 8
