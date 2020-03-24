@@ -8,8 +8,8 @@ from keras import backend as K
 # dimensions of our images.
 img_width, img_height = 150, 150
 
-train_data_dir = '../data/hand-gestures-dataset/train'
-validation_data_dir = '../data/hand-gestures-dataset/validation'
+train_data_dir = '../data/SSL-dataset/train'
+validation_data_dir = '../data/SSL-dataset/validation'
 nb_train_samples = 6
 nb_validation_samples = 6
 epochs = 1
