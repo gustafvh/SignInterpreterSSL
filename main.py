@@ -1,5 +1,7 @@
 from PIL import Image
 import numpy as np
+# Weights are initiliased at radom so this makes our model deterministic (same result each time)
+np.random.seed(123) # for reproducibility
 import pandas as pd
 import json
 from skimage import transform
@@ -11,13 +13,15 @@ from keras.applications.mobilenet import preprocess_input
 from keras.preprocessing.image import ImageDataGenerator
 from keras.models import Model
 from keras.models import model_from_json
+from keras.callbacks import ModelCheckpoint
+
 
 from keras.utils import plot_model
 
 
 import cv2
+import os
 
-from keras.datasets import mnist
 
 #### Variables ######
 
@@ -76,14 +80,23 @@ def fitModel(model):
         batch_size=BATCH_SIZE,
         class_mode='categorical')
 
-    model.compile(optimizer='Adam', loss='categorical_crossentropy', metrics=['accuracy'])
+    model.compile(optimizer='Adam', loss='categorical_crossentropy',
+                  metrics=['accuracy'])
+
+    # Checkpoints: save only the best performing model weights as file
+    checkpoint = ModelCheckpoint('./output/model-weights.best.hdf5',
+                                 monitor='val_accuracy', verbose=1,
+                                 save_best_only=True,
+                                 save_weights_only=False, mode='max')
+    callbacks_list = [checkpoint]
 
     step_size_training = train_generator.n // train_generator.batch_size  # Balance here to find optimal step_size
     history = model.fit_generator(generator=train_generator,
                         steps_per_epoch=step_size_training,
                         epochs=EPOCHS,
                         validation_data=validation_generator,
-                        validation_steps=validation_generator.n // BATCH_SIZE)
+                        validation_steps=validation_generator.n // BATCH_SIZE,
+                        callbacks=callbacks_list)
 
     # # Save training history as file. For ex. loss and accuracy in each epoch
     # with open('./output/history.json', 'w') as file:
@@ -205,10 +218,12 @@ def evaluateModel(model):
         batch_size=BATCH_SIZE,
         class_mode='categorical')
 
-    model.compile(optimizer='Adam', loss='categorical_crossentropy', metrics=['accuracy'])
+    model.compile(optimizer='Adam', loss='categorical_crossentropy',
+                  metrics=['accuracy'])
     score = model.evaluate_generator(validation_generator,
                                      validation_generator.n / BATCH_SIZE,
-                                     workers=12, use_multiprocessing=True, verbose=1)
+                                     workers=12, use_multiprocessing=True,
+                                     verbose=1)
     loss, accuracy = score[0], score[1]
     return loss, accuracy
 
@@ -218,11 +233,10 @@ def mainPipeline():
     finalModel = loadModelfromJson('./output/model.json', './output/model.h5')
 
 
-    letter = 'K'
+    letter = 'A'
     imagePath = './data/asl-alphabet/asl_alphabet_train/' + letter + '/' + letter + '575.jpg'
     #imagePath = './data/test-images/' + letter + '/' + letter + '.jpg'
     image = loadSingleImage(imagePath)
-
     predictions = finalModel.predict(image,
                                      workers=12,
                                      use_multiprocessing=True)
@@ -232,13 +246,9 @@ def mainPipeline():
     #print(predictions)
     loss, accuracy = evaluateModel(finalModel)
     print("Loss: ", loss, "Accuracy: ", accuracy*100, '%')
-
     print('Input was:', letter)
-
-
     top_three_preds, all_preds = getTopPredictions(predictions[0])
     print(top_three_preds)
-    #evaluateModel(finalModel)
     # print(predictions)
 
 
@@ -247,6 +257,11 @@ def mainPipeline():
     #print(evaluateModel(finalModel))
 
     #showImageCV(predictions, imagePath, letter)
+
+    #Output updated training data structure in text-file
+    os.system("tree --filelimit=20 > project-file-structure.txt")
+
+
 
 
 mainPipeline()
