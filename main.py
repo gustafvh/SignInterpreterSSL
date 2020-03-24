@@ -16,13 +16,13 @@ from keras.datasets import mnist
 
 #### Variables ######
 
-TRAINING_DATA_SET_PATH = './data/asl-alphabet-small/asl_alphabet_train'
-VALIDATION_DATA_SET_PATH = './data/asl-alphabet-small/asl_alphabet_test'
-EPOCHS = 3
+TRAINING_DATA_SET_PATH = './data/asl-alphabet-medium/asl_alphabet_train'
+VALIDATION_DATA_SET_PATH = './data/asl-alphabet-medium/asl_alphabet_test'
+EPOCHS = 5
 BATCH_SIZE = 32
 IMAGE_HEIGHT = 224
 IMAGE_WIDTH = 224
-DATASET_CATEGORIES = 3
+DATASET_CATEGORIES = 29
 
 
 ####################
@@ -52,13 +52,11 @@ def freezeLayers(numOfLayers, model):
 
 
 def fitModel(model):
-    train_datagen = ImageDataGenerator(rescale=1. / 255,
-                                       preprocessing_function=preprocess_input)  # For training data
+    train_datagen = ImageDataGenerator(preprocessing_function=preprocess_input)  # For training data
 
     # this is the augmentation configuration we will use for testing:
     # only rescaling
-    test_datagen = ImageDataGenerator(rescale=1. / 255,
-                                      preprocessing_function=preprocess_input)
+    val_datagen = ImageDataGenerator(preprocessing_function=preprocess_input)
 
     train_generator = train_datagen.flow_from_directory(TRAINING_DATA_SET_PATH,
                                                         target_size=(IMAGE_WIDTH, IMAGE_HEIGHT),
@@ -67,7 +65,7 @@ def fitModel(model):
                                                         class_mode='categorical',
                                                         shuffle=True)
 
-    validation_generator = test_datagen.flow_from_directory(
+    validation_generator = val_datagen.flow_from_directory(
         VALIDATION_DATA_SET_PATH,
         target_size=(IMAGE_WIDTH, IMAGE_HEIGHT),
         batch_size=BATCH_SIZE,
@@ -121,16 +119,15 @@ def loadSingleImage(filename):
     return np_image
 
 
-def showImageCV(preds):
+def showImageCV(preds, imagePath, letter):
     # find the class label index with the largest corresponding
     # probability
     i = preds.argmax(axis=1)[0]
-    label = 'C'
     # label = lb.classes_[i]
     # draw the class label + probability on the output image
-    text = "{}: {:.2f}%".format(label, preds[0][i] * 100)
+    text = "{}: {:.2f}%".format(letter, preds[0][i] * 100)
 
-    image = cv2.imread('./data/asl-alphabet/asl_alphabet_train/asl_alphabet_train/C/C1.jpg')
+    image = cv2.imread(imagePath)
     output = image.copy()
     cv2.putText(output, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7,
                 (0, 0, 255), 2)
@@ -165,11 +162,17 @@ def evaluateModel(model):
 
 
 def mainPipeline():
-    finalModel = trainNetwork()
-    #finalModel = loadModelfromJson('./output/model.json', './output/model.h5')
+    #finalModel = trainNetwork()
+    finalModel = loadModelfromJson('./output/model.json', './output/model.h5')
 
-    image = loadSingleImage('./data/asl-alphabet/asl_alphabet_train/C/C125.jpg')
+    letter = 'G'
+    #imagePath = './data/asl-alphabet/asl_alphabet_train/' + letter + '/' + letter + '575.jpg'
+    imagePath = './data/test-images/' + letter + '/' + letter + '.jpg'
+    image = loadSingleImage(imagePath)
     predictions = finalModel.predict(image)
+
+
+
     # Predictions contains a 2D array where the index of the
     # images sent in (so for a single image its only a
     # prediction[0]) and in that array is the prediction score for
@@ -180,10 +183,12 @@ def mainPipeline():
     # print(predictions)
     print(getTopPredictions(predictions))
     # print(predictions)
-    # showImageCV(predictions)
+
 
     print('*****************************************************')
-    print(evaluateModel(finalModel))
+    #print(evaluateModel(finalModel))
+
+    showImageCV(predictions, imagePath, letter)
 
 
 mainPipeline()
@@ -191,3 +196,20 @@ mainPipeline()
 # (X_train, y_train), (X_test, y_test) = mnist.load_data()
 # print(np.shape(X_train))
 # print(type(X_train))
+
+
+
+# Current Model:
+# Found 2900 images belonging to 29 classes.
+# Found 29 images belonging to 29 classes.
+# Epoch 1/5
+# 90/90 [==============================] - 261s 3s/step - loss: 0.2957 - accuracy: 0.9344 - val_loss: 5.4062 - val_accuracy: 0.1034
+# Epoch 2/5
+# 90/90 [==============================] - 246s 3s/step - loss: 0.0931 - accuracy: 0.9784 - val_loss: 1.7850 - val_accuracy: 0.6207
+# Epoch 3/5
+# 90/90 [==============================] - 250s 3s/step - loss: 0.0260 - accuracy: 0.9934 - val_loss: 14.2982 - val_accuracy: 0.1724
+# Epoch 4/5
+# 90/90 [==============================] - 263s 3s/step - loss: 0.1490 - accuracy: 0.9718 - val_loss: 13.2542 - val_accuracy: 0.1034
+# Epoch 5/5
+# 90/90 [==============================] - 228s 3s/step - loss: 0.0223 - accuracy: 0.9972 - val_loss: 0.2101 - val_accuracy: 0.9655
+# Model saved as ./output/model.h5
