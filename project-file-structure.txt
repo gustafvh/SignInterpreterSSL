@@ -55,8 +55,10 @@
 │           └── G.jpg
 ├── main.py
 ├── output
+│   ├── model-weights.best.hdf5
 │   ├── model.h5
-│   └── model.json
+│   ├── model.json
+│   └── model54.h5
 └── project-file-structure.txt
 
-31 directories, 28 files
+31 directories, 30 files

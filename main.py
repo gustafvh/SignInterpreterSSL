@@ -1,6 +1,6 @@
 from PIL import Image
 import numpy as np
-# Weights are initiliased at radom so this makes our model deterministic (same result each time)
+# Weights are initiliased at random so this makes our model deterministic (same result each time)
 np.random.seed(123) # for reproducibility
 import pandas as pd
 import json
@@ -42,10 +42,10 @@ def getPreTrainedModel():
 
     my_model = pre_trained_base_model.output
     my_model = GlobalAveragePooling2D()(my_model)
-    my_model = Dense(1000, activation='relu')(
+    my_model = Dense(1024, activation='relu')(
         my_model)  # Add layer. Layer #1: 1000 nodes, and rectified linear activation function
-    my_model = Dense(1000, activation='relu')(my_model)  # Layer #2
-    my_model = Dense(500, activation='relu')(my_model)
+    my_model = Dense(1024, activation='relu')(my_model)  # Layer #2
+    my_model = Dense(512, activation='relu')(my_model)
     final_layer = Dense(DATASET_CATEGORIES, activation='softmax')(my_model)  # DATASET_CATEGORIES because it could be A,B,C etc.
     final_model = Model(inputs=pre_trained_base_model.input, outputs=final_layer)
     return final_model
@@ -229,8 +229,8 @@ def evaluateModel(model):
 
 
 def mainPipeline():
-    #finalModel = trainNetwork()
-    finalModel = loadModelfromJson('./output/model.json', './output/model.h5')
+    finalModel = trainNetwork()
+    finalModel = loadModelfromJson('./output/model.json', './output/model-weights.best.hdf5')
 
 
     letter = 'A'
