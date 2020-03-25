@@ -3,6 +3,10 @@ import numpy as np
 
 # Weights are initiliased at random so this makes our model deterministic (same result each time)
 np.random.seed(123)  # for reproducibility
+
+# To start VM
+# $ source sli-environment/bin/activate
+
 import pandas as pd
 import json
 from skimage import transform
@@ -26,12 +30,9 @@ import os
 
 #### Variables ######
 
-from tensorflow.python.client import device_lib
-print(device_lib.list_local_devices())
-
 TRAINING_DATA_SET_PATH = './data/asl-alphabet-medium/asl_alphabet_train'
 VALIDATION_DATA_SET_PATH = './data/asl-alphabet-medium/asl_alphabet_test'
-EPOCHS = 5  # 50-100 is a good range to try later
+EPOCHS = 15  # 50-100 is a good range to try later
 BATCH_SIZE = 32
 IMAGE_HEIGHT = 224
 IMAGE_WIDTH = 224
@@ -227,10 +228,10 @@ def evaluateModel(model):
 
 
 def mainPipeline():
-    #finalModel = trainNetwork()
-    finalModel = loadModelfromJson('./output/model.json', './output/model62.h5')
+    finalModel = trainNetwork()
+    #finalModel = loadModelfromJson('./output/model.json', './output/model62.h5')
 
-    letter = 'C'
+    letter = 'O'
     imagePath = './data/asl-alphabet/asl_alphabet_train/' + letter + '/' + letter + '575.jpg'
     # imagePath = './data/test-images/' + letter + '/' + letter + '.jpg'
     image = loadSingleImage(imagePath)
@@ -240,8 +241,8 @@ def mainPipeline():
 
     print('*****************************************************')
     # print(predictions)
-    # loss, accuracy = evaluateModel(finalModel)
-    # print("Loss: ", loss, "Accuracy: ", accuracy * 100, '%')
+    loss, accuracy = evaluateModel(finalModel)
+    print("Loss: ", loss, "Accuracy: ", accuracy * 100, '%')
     print('Input was:', letter)
     top_three_preds, all_preds = getTopPredictions(predictions[0])
     print(top_three_preds)
