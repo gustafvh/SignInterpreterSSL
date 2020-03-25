@@ -26,9 +26,12 @@ import os
 
 #### Variables ######
 
+from tensorflow.python.client import device_lib
+print(device_lib.list_local_devices())
+
 TRAINING_DATA_SET_PATH = './data/asl-alphabet-medium/asl_alphabet_train'
 VALIDATION_DATA_SET_PATH = './data/asl-alphabet-medium/asl_alphabet_test'
-EPOCHS = 10  # 50-100 is a good range to try later
+EPOCHS = 5  # 50-100 is a good range to try later
 BATCH_SIZE = 32
 IMAGE_HEIGHT = 224
 IMAGE_WIDTH = 224
@@ -97,7 +100,8 @@ def fitModel(model):
                                   epochs=EPOCHS,
                                   validation_data=validation_generator,
                                   validation_steps=validation_generator.n // BATCH_SIZE,
-                                  callbacks=callbacks_list)
+                                  callbacks=callbacks_list,
+                                  )
 
     # # Save training history as file. For ex. loss and accuracy in each epoch
     # with open('./output/history.json', 'w') as file:
@@ -223,10 +227,10 @@ def evaluateModel(model):
 
 
 def mainPipeline():
-    finalModel = trainNetwork()
-    #finalModel = loadModelfromJson('./output/model.json', './output/model.h5')
+    #finalModel = trainNetwork()
+    finalModel = loadModelfromJson('./output/model.json', './output/model62.h5')
 
-    letter = 'A'
+    letter = 'C'
     imagePath = './data/asl-alphabet/asl_alphabet_train/' + letter + '/' + letter + '575.jpg'
     # imagePath = './data/test-images/' + letter + '/' + letter + '.jpg'
     image = loadSingleImage(imagePath)
@@ -236,8 +240,8 @@ def mainPipeline():
 
     print('*****************************************************')
     # print(predictions)
-    loss, accuracy = evaluateModel(finalModel)
-    print("Loss: ", loss, "Accuracy: ", accuracy * 100, '%')
+    # loss, accuracy = evaluateModel(finalModel)
+    # print("Loss: ", loss, "Accuracy: ", accuracy * 100, '%')
     print('Input was:', letter)
     top_three_preds, all_preds = getTopPredictions(predictions[0])
     print(top_three_preds)
