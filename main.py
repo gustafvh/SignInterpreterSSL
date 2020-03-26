@@ -41,7 +41,14 @@ DATASET_CATEGORIES = 29
 ####################
 
 
-train_datagen = ImageDataGenerator(preprocessing_function=preprocess_input)  # For training data
+train_datagen = ImageDataGenerator(preprocessing_function=preprocess_input,
+                                   # rotation_range=10,
+                                   # width_shift_range=0.1,
+                                   # height_shift_range=0.1,
+                                   # shear_range=0.1,
+                                   # zoom_range=0.1,
+                                   # fill_mode='nearest'
+                                   )
 
 val_datagen = ImageDataGenerator(preprocessing_function=preprocess_input)
 
@@ -147,8 +154,9 @@ def saveModelToJson(model):
     with open("./output/model.json", "w") as json_file:
         json_file.write(model_json)
 
-    model.save_weights("./output/model.h5")
-    print("Model saved as ./output/model.h5")
+    print("Model saved as ./output/model.json")
+    #model.save_weights("./output/model.h5")
+    #print("Model saved as ./output/model.h5")
 
 
 def loadModelfromJson(modelPath, weightPath):
@@ -221,23 +229,20 @@ def evaluateModel(model):
                   metrics=['accuracy'])
     score = model.evaluate_generator(validation_generator,
                                      validation_generator.n / BATCH_SIZE,
-                                     workers=12, use_multiprocessing=True,
                                      verbose=1)
     loss, accuracy = score[0], score[1]
     return loss, accuracy
 
 
 def mainPipeline():
-    finalModel = trainNetwork()
-    #finalModel = loadModelfromJson('./output/model.json', './output/model62.h5')
+    #finalModel = trainNetwork()
+    finalModel = loadModelfromJson('./output/model.json', './output/model61-15e.best.hdf5')
 
-    letter = 'O'
+    letter = 'E'
     imagePath = './data/asl-alphabet/asl_alphabet_train/' + letter + '/' + letter + '575.jpg'
     # imagePath = './data/test-images/' + letter + '/' + letter + '.jpg'
     image = loadSingleImage(imagePath)
-    predictions = finalModel.predict(image,
-                                     workers=12,
-                                     use_multiprocessing=True)
+    predictions = finalModel.predict(image)
 
     print('*****************************************************')
     # print(predictions)

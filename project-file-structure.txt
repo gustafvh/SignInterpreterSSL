@@ -59,7 +59,8 @@
 │   ├── model.h5
 │   ├── model.json
 │   ├── model54.h5
+│   ├── model61-15e.best.hdf5
 │   └── model62.h5
 └── project-file-structure.txt
 
-31 directories, 31 files
+31 directories, 32 files
