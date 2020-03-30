@@ -2,26 +2,41 @@
 import cv2
 import os
 
-categories = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
-              'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
-              'V', 'W', 'X', 'Y', 'Z', 'Å', 'Ä', 'Ö']
+# categories = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
+#               'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
+#               'V', 'W', 'X', 'Y', 'Z', 'Å', 'Ä', 'Ö']
+
+categories = ['G']
 
 
-def createImagesFromClip():
-    path = 'clips/G/G001.MOV'
+def createImagesFromClip(letter):
+    folderPath = 'clips/' + letter + '/'
+
+    for filename in os.listdir(folderPath):
+        clipPath = os.path.join(folderPath, filename)
     # Read the video from specified path
-    videoStream = cv2.VideoCapture(path)
+    videoStream = cv2.VideoCapture(clipPath)
 
     currentframe = 1
     counter = 0
-    while (True):
+    while True:
 
-        ret, frame = videoStream.read()
+        live, frame = videoStream.read()
         everyOther = True
 
-        if ret:
-            # if video is still left continue creating images
-            name = './data/SSL-dataset/train/G/G' + str(currentframe) + '.jpg'
+        if live:  # Continue as long as video still has frames
+
+            try:
+                # creating a folder named data
+                dataFolder = 'data/SSL-dataset/train/' + letter
+                if not os.path.exists(dataFolder):
+                    os.makedirs(dataFolder)
+
+                # if not created then raise error
+            except OSError:
+                pass
+
+            name = './data/SSL-dataset/train/' + letter + '/' + letter + str(currentframe) + '.jpg'
             print('Creating...' + name)
 
             # writing the extracted images
@@ -44,4 +59,5 @@ def createImagesFromClip():
     cv2.destroyAllWindows()
 
 
-createImagesFromClip()
+for letter in categories:
+    createImagesFromClip(letter)
