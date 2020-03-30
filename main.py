@@ -8,7 +8,7 @@ def mainPipeline():
 
 
     filenames = test_generator.filenames
-    letter = filenames[0][0]
+    letter = filenames[0][0]  #Take first file and first char in filename string
     predictions = finalModel.predict_generator(test_generator,steps = len(filenames))
     #image = loadSingleImage(imagePath)
     #predictions = finalModel.predict(image)
