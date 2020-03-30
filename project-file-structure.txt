@@ -54,6 +54,7 @@
 │       └── G
 │           └── G.jpg
 ├── main.py
+├── newMain.py
 ├── output
 │   ├── model-weights.best.hdf5
 │   ├── model.h5
@@ -63,4 +64,4 @@
 │   └── model62.h5
 └── project-file-structure.txt
 
-31 directories, 32 files
+31 directories, 33 files
