@@ -7,7 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/1oxKUHDykfQOsG0VpP_pblMf9waEy8pq7
 """
 
-# Must be run in Colab. Downloads dataset from github repo
+# Must be run in Colab. Downloads dataset from github repo  
 !rm -rf sample_data/
 !mkdir output/
 !git clone https://github.com/gustafvh/kex-dataset.git

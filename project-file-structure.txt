@@ -54,6 +54,7 @@
 │       └── G
 │           └── G.jpg
 ├── main.py
+<<<<<<< HEAD
 ├── newMain.py
 ├── output
 │   ├── model-weights.best.hdf5
@@ -65,3 +66,11 @@
 └── project-file-structure.txt
 
 31 directories, 33 files
+=======
+├── output
+│   ├── model.h5
+│   └── model.json
+└── project-file-structure.txt
+
+31 directories, 28 files
+>>>>>>> d1bd2a787fe1745301270de2c14393582d320720
