@@ -2,10 +2,12 @@
 import cv2
 import os
 
-categories = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q'
+categories = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
+              'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
+              'V', 'W', 'X', 'Y', 'Z', 'Å', 'Ä', 'Ö']
+
 
 def createImagesFromClip():
-
     path = 'clips/G/G001.MOV'
     # Read the video from specified path
     videoStream = cv2.VideoCapture(path)
@@ -29,7 +31,7 @@ def createImagesFromClip():
 
             cv2.imwrite(name, frame)
 
-            counter += 15 #Capture every 15th frame (if 30fps, every 0.5 seconds of clip
+            counter += 15  # Capture every 15th frame (if 30fps, every 0.5 seconds of clip
             videoStream.set(1, counter)
 
             currentframe += 1
@@ -42,6 +44,4 @@ def createImagesFromClip():
     cv2.destroyAllWindows()
 
 
-
 createImagesFromClip()
-
