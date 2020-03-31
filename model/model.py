@@ -49,7 +49,7 @@ from keras.preprocessing import image
 from keras.utils import plot_model
 
 import cv2
-from google.colab.patches import cv2_imshow
+#from google.colab.patches import cv2_imshow
 import os
 
 TRAINING_DATA_SET_PATH = '/content/kex-dataset/asl-alphabet/asl_alphabet_train'
