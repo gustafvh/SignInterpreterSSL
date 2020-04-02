@@ -1,4 +1,10 @@
-/data/*
+/data/datasets*
+/data/clips*
 /(old)/*
 /clips/*
 /output/*
+
+__pycache__
+
+*.hdf5
+*.h5
