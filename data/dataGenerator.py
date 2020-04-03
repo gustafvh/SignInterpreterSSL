@@ -1,6 +1,8 @@
+#-*- coding: utf-8 -*-
 # Importing all necessary libraries
 import cv2
 import os
+
 
 categories = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
               'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
@@ -42,10 +44,10 @@ def createImagesFromClip(letter):
             name = './data/SSL-dataset/' + folder + '/' + letter + '/' + letter + str(currentframe) + '.jpg'
             print('Creating...' + name)
 
-            frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
+            #frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
 
             # Crop image. First is height
-            frame = frame[200:920, 0:720]
+            frame = frame[0:1080, 420:1500]
             frame = cv2.resize(frame, (224, 224))
 
             cv2.imwrite(name, frame)
