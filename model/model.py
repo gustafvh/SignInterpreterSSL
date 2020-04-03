@@ -8,9 +8,9 @@ Original file is located at
 """
 
 # Must be run in Colab. Downloads dataset from github repo  
-#!rm -rf sample_data/
-#!mkdir output/
-#!git clone https://github.com/gustafvh/kex-dataset.git
+# !rm -rf sample_data/
+# !mkdir output/
+# !git clone https://github.com/gustafvh/kex-dataset.git
 
 # Get dataset online example
 # !wget -cq https://s3.amazonaws.com/content.udacity-data.com/courses/nd188/flower_data.zip
@@ -20,6 +20,7 @@ from PIL import Image
 import numpy as np
 
 import warnings
+
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 # from google.colab import files
@@ -49,14 +50,14 @@ from keras.preprocessing import image
 from keras.utils import plot_model
 
 import cv2
-#from google.colab.patches import cv2_imshow
+# from google.colab.patches import cv2_imshow
 import os
 
 TRAINING_DATA_SET_PATH = '/content/kex-dataset/asl-alphabet/asl_alphabet_train'
 VALIDATION_DATA_SET_PATH = '/content/kex-dataset/asl-alphabet/asl_alphabet_test'
 TEST_DATA_SET_PATH = '/content/kex-dataset/test-images'
-#TRAINING_DATA_SET_PATH = './data/asl-alphabet-medium/asl_alphabet_train'
-#VALIDATION_DATA_SET_PATH = './data/asl-alphabet-medium/asl_alphabet_test'
+# TRAINING_DATA_SET_PATH = './data/asl-alphabet-medium/asl_alphabet_train'
+# VALIDATION_DATA_SET_PATH = './data/asl-alphabet-medium/asl_alphabet_test'
 EPOCHS = 10  # 50-100 is a good range to try later
 BATCH_SIZE = 32
 IMAGE_HEIGHT = 224
@@ -95,8 +96,9 @@ test_generator = test_datagen.flow_from_directory(
     batch_size=BATCH_SIZE,
     class_mode='categorical')
 
+
 def getPreTrainedModel():
-    pre_trained_base_model = Xception(weights='imagenet',include_top=False,
+    pre_trained_base_model = Xception(weights='imagenet', include_top=False,
                                       input_shape=(IMAGE_WIDTH, IMAGE_HEIGHT, 3)
                                       )  # Remove last neuron layer (that contains 1000 neurons)
 
@@ -110,8 +112,9 @@ def getPreTrainedModel():
         my_model)  # DATASET_CATEGORIES because it could be A,B,C etc.
     final_model = Model(inputs=pre_trained_base_model.input, outputs=final_layer)
 
-    #print(final_model.summary())
+    # print(final_model.summary())
     return final_model
+
 
 def freezeLayers(numOfLayers, model):
     for single_layer in model.layers[:numOfLayers]:
@@ -120,6 +123,7 @@ def freezeLayers(numOfLayers, model):
         single_layer.trainable = True
 
     return model
+
 
 def fitModel(model):
     model.compile(optimizer='Adam', loss='categorical_crossentropy',
@@ -132,7 +136,8 @@ def fitModel(model):
                                  save_weights_only=False, mode='max')
     callbacks_list = [checkpoint]
 
-    step_size_training = (train_generator.n // train_generator.batch_size) * 0.7 # smart to use a small learning rate because
+    step_size_training = (
+                                     train_generator.n // train_generator.batch_size) * 0.7  # smart to use a small learning rate because
     # high learning rates increase the risk of losing previous knowledge.# Balance here to find optimal step_size
     history = model.fit_generator(generator=train_generator,
                                   steps_per_epoch=step_size_training,
@@ -148,6 +153,7 @@ def fitModel(model):
 
     return model
 
+
 def trainNetwork():
     preTrainedModel = getPreTrainedModel()
     trimmedModel = freezeLayers(20, preTrainedModel)
@@ -155,14 +161,15 @@ def trainNetwork():
     saveModelToJson(finalModel)
     return finalModel
 
+
 def saveModelToJson(model):
     model_json = model.to_json()
     with open("/content/output/model.json", "w") as json_file:
         json_file.write(model_json)
 
     print("Model saved as /content/output/model.json")
-    #model.save_weights("./output/model-weights.h5")
-    #print("Model Weights saved as ./output/model.h5")
+    # model.save_weights("./output/model-weights.h5")
+    # print("Model Weights saved as ./output/model.h5")
 
 
 def loadModelfromJson(modelPath, weightPath):
@@ -175,6 +182,7 @@ def loadModelfromJson(modelPath, weightPath):
     loaded_model.load_weights(weightPath)
     print("Model loaded from", modelPath)
     return loaded_model
+
 
 def loadSingleImage(filename):
     np_image = Image.open(filename)
@@ -199,6 +207,7 @@ def showImageCV(preds, imagePath, letter):
     # show the output image
     cv2_imshow(output)
     cv2.waitKey(0)
+
 
 def getTopPredictions(preds):
     # top_preds = preds.argmax(axis=1)[0]
@@ -228,8 +237,8 @@ def getTopPredictions(preds):
 
     return top_preds, all_preds
 
-def evaluateModel(model):
 
+def evaluateModel(model):
     model.compile(optimizer='Adam', loss='categorical_crossentropy',
                   metrics=['accuracy'])
     score = model.evaluate_generator(validation_generator,
@@ -238,31 +247,31 @@ def evaluateModel(model):
     loss, accuracy = score[0], score[1]
     return loss, accuracy
 
+
 def mainPipeline():
-    #finalModel = trainNetwork()
+    # finalModel = trainNetwork()
     finalModel = loadModelfromJson('/content/output/model.json', '/content/output/model-weights-best.hdf5')
 
-    #letter = 'C'
-    #imagePath = '/content/kex-dataset/asl-alphabet/asl_alphabet_test/' + letter + '/' + letter + '575.jpg'
+    # letter = 'C'
+    # imagePath = '/content/kex-dataset/asl-alphabet/asl_alphabet_test/' + letter + '/' + letter + '575.jpg'
     imagePath = '/content/kex-dataset/test-images/G/G.jpg'
-
 
     filenames = test_generator.filenames
     letter = filenames[0][0]
-    predictions = finalModel.predict_generator(test_generator,steps = len(filenames))
-    #image = loadSingleImage(imagePath)
-    #predictions = finalModel.predict(image)
+    predictions = finalModel.predict_generator(test_generator, steps=len(filenames))
+    # image = loadSingleImage(imagePath)
+    # predictions = finalModel.predict(image)
 
     print('*****************************************************')
-    #print(predictions)
-    #loss, accuracy = evaluateModel(finalModel)
-    #print("Loss: ", loss, "Accuracy: ", accuracy * 100, '%')
+    # print(predictions)
+    # loss, accuracy = evaluateModel(finalModel)
+    # print("Loss: ", loss, "Accuracy: ", accuracy * 100, '%')
     print('Input was:', letter)
     top_three_preds, all_preds = getTopPredictions(predictions[0])
     print(top_three_preds)
     # print(predictions)
-    #files.download('/content/output/model-weights-best.hdf5')
-    #files.download('/content/output/model.json')
+    # files.download('/content/output/model-weights-best.hdf5')
+    # files.download('/content/output/model.json')
 
     print('*****************************************************')
     # print(finalModel.summary())
@@ -271,9 +280,10 @@ def mainPipeline():
     showImageCV(predictions, imagePath, letter)
 
     # Output updated training data structure in text-file
-    #os.system("tree --filelimit=20 > project-file-structure.txt")
+    # os.system("tree --filelimit=20 > project-file-structure.txt")
+
 
 def testThisThing():
     return "Yes it works from model"
 
-#mainPipeline()
+# mainPipeline()
