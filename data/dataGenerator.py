@@ -41,7 +41,7 @@ def createImagesFromClip(letter):
             except OSError:
                 pass
 
-            name = './data/SSL-dataset/' + folder + '/' + letter + '/' + letter + str(currentframe) + '.jpg'
+            name = './data/SSL-dataset/' + folder + '/' + letter + '/' + letter + '1' + str(currentframe) + '.jpg'
             print('Creating...' + name)
 
             #frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
