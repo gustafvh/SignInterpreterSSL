@@ -1,5 +1,5 @@
 {
-  "name": "SignInterpreterSSL",
+  "name": "signinterpreterssl",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -16,9 +16,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "run-flask": "cd flask-backend && flask run --no-debugger",
-    "run-both": "react-scripts start && cd flask-backend && flask run --no-debugger"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
