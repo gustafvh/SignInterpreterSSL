@@ -3,11 +3,9 @@
 import cv2
 import os
 
-
 categories = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
               'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
               'V', 'W', 'X', 'Y', 'Z', 'Å', 'Ä', 'Ö']
-
 
 # categories = ['A']
 
@@ -22,10 +20,7 @@ def createImagesFromClip(letter):
     currentframe = 1
     counter = 0
     while True:
-
         live, frame = videoStream.read()
-        everyOther = True
-
         if live and currentframe <= 600:  # Continue as long as video still has frames
 
             if currentframe <= 500: #Train/Test split
