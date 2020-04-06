@@ -3,8 +3,7 @@ import Header from './Header/Header.js';
 import Footer from './Footer/Footer.js';
 
 import "normalize.css/normalize.css"; //NP, Reset all browsers default things
-
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 
 export default class App extends Component {
   constructor(props) {

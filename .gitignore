@@ -1,3 +1,4 @@
+# model and datasets
 /data/datasets*
 /data/clips*
 /(old)/*
@@ -8,3 +9,25 @@ __pycache__
 
 *.hdf5
 *.h5
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
