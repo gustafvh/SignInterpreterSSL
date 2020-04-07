@@ -12,11 +12,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 300px;
+    margin-left: 40px;
 }
 
 .second-column {
     display: flex;
-    max-width: 520px;
+    width: 300px;
     flex-grow: 2;
     flex-direction: column;
     text-align: left;

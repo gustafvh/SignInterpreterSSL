@@ -22,15 +22,14 @@ export default class SecondColumn extends Component {
             {this.props.gettingAPIResponse 
                 ? <div className="loading-icon__container"><div className="lds-ellipsis"><div></div><div></div><div></div><div></div></div></div>
             : this.props.googleResponse === undefined 
-            ? <div>
-                <h4>Identify Sign</h4>
-                <p>We will now analyze which sign you have given us <span style={{fontWeight: "bold"}}>you have given us</span> </p>
+            ? <div style={{width: "400px"}}>
+                <p style={{textAlign: "center"}}>Press the button and we will analyze which <span style={{fontWeight: "bold"}}>sign you have given us</span> </p>
                     <div className="next-step__container">
                 <button onClick={this.props.submitToCloudVisionAPI} className="next-step__button cta-button__hover"> Identify Sign <img height="20px" style={{marginLeft: "10px"}} alt="upload icon" src={smileyIcon}/></button>
             </div>    
             </div> 
             : <div> 
-            <h4>These are the Doppelgangers we found</h4>
+            <h4>Your sign is: </h4>
             <p>We labeled the image as <span style={{fontWeight: "bold"}}>{this.props.imageLabels[0]}</span>.</p>
             {this.renderSimilairImages(this.props.similairImagesUrls)}
             <p className="small-information-text">Scroll down for more images.</p>

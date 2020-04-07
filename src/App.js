@@ -25,26 +25,7 @@ export default class App extends Component {
     })
   }
 
-  sendTOAPI = async () => {
-    try {
-      this.setState({ gettingAPIResponse: true });
-      let data = 'hello';
-      let body = JSON.stringify({
-
-      });
-      let response = await fetch(
-          "https://vision.googleapis.com/v1/images:annotate?key=" +
-          Environment["GOOGLE_CLOUD_VISION_API_KEY"],
-          {
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json"
-            },
-            method: "POST",
-            body: body
-          }
-      );
-      let responseJson = await response.json();
+  
 
   render() {
     return (

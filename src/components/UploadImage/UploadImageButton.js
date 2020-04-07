@@ -10,7 +10,7 @@ export default class UploadImageButton extends Component {
             <div>
             <div className="upload-file__container">
             <label htmlFor="file-upload" className="upload-file__button">    {/* Is what is visible*/}
-                Select Image <img style={{marginLeft: "10px"}} height="20px" alt="upload icon" src={uploadIcon}/>
+                Select Image<img style={{marginLeft: "10px"}} height="20px" alt="upload icon" src={uploadIcon}/>
             </label>
 
 

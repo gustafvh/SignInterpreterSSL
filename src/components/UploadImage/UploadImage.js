@@ -4,6 +4,9 @@ import firebase from "../../config/firebase";
 import Environment from "../../config/environment";
 import "./LoadingIcon.scss";
 import "./UploadImage.scss";
+import oneSign from "../../assets/icons/one-finger.png";
+import twoSign from "../../assets/icons/two-fingers.png";
+import threeSign from "../../assets/icons/three-fingers.png";
 
 // import image from "../../assets/images/image.png";
 import ImageWithSettings from "./ImageWithSettings/ImageWithSettings.js";
@@ -138,9 +141,11 @@ export default class UploadImage extends Component {
             />
           </div>
         ) : (
-          <div>
-            {/*<img className="emoji-image" src={emojis} alt="emojis" />*/}
-            IMAGE
+          <div style={{justifyContent: "center"}}>
+            <img className="sign-one" src={oneSign} alt="sign-one" style={{height: "80px", marginLeft: "5px"}}/>
+            <img className="sign-two" src={twoSign} alt="sign-two" style={{height: "80px"}}/>
+            <img className="sign-three" src={threeSign} alt="sign-three" style={{height: "80px"}}/>
+            {/* "Icons made by Freepik from www.flaticon.com" */}
             <UploadImageButton
               uploadToFirebaseStorage={this.uploadToFirebaseStorage}
             />
