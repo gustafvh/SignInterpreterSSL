@@ -5,7 +5,7 @@
 /clips/*
 /output/*
 
-/config/*
+/src/config/*
 
 __pycache__
 
