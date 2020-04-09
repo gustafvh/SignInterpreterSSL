@@ -7,7 +7,10 @@ export default class Footer extends Component {
         return (
             <div className="footer__container">
 
-            <a className="footer_small-text" href="https://github.com/gustafvh/SignInterpreterSSL">Made by Gustaf Halvardsson & Johanna Peterson</a>
+            <p className="footer_small-text"> Made by Gustaf Halvardsson & Johanna Peterson |
+            <a className="footer_small-text" href="https://github.com/gustafvh/SignInterpreterSSL"> Privacy Policy |</a> 
+            <a className="footer_small-text" href="https://github.com/gustafvh/SignInterpreterSSL"> GitHub</a>
+            </p>
             
         </div>
         )
