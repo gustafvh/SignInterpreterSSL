@@ -14,6 +14,8 @@ export default class ImageWithSettings extends Component {
                 <SecondColumn submitToCloudVisionAPI={this.props.submitToCloudVisionAPI} gettingAPIResponse={this.props.gettingAPIResponse} googleResponse={this.props.googleResponse} similairImagesUrls={this.props.similairImagesUrls} imageLabels={this.props.imageLabels}/>
             </div>
         </div>
+
+        
         )
     }
 }

@@ -3,7 +3,6 @@
     align-items: center;
     padding: 0px;
     width: 75vw;
-
 }
 
 .first-column {
@@ -16,15 +15,6 @@
     margin-left: 70px;
 }
 
-.second-column {
-    display: flex;
-    width: 300px;
-    flex-grow: 2;
-    flex-direction: column;
-    text-align: left;
-    margin: 0 20px;
-}
-
 .image {
     width: 250px;
     height: 250px;
@@ -35,7 +25,6 @@
     background-color: #C8C8C8;
     border: 4px solid #FFF;
     margin: 20px 0;
-
     transition: all 0.2s ease;
 }
 
@@ -86,3 +75,4 @@
     }
 
 }
+

@@ -5,7 +5,6 @@
     flex-direction: column;
 }
 
-
 input[type="file"] {
     display: none;
 }
@@ -17,7 +16,7 @@ input[type="file"] {
     color: #eee;
     font-weight: bold;
     border-radius: 15px;
-    background-color: #186cb5;
+    background-color: #0d98ba;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
     cursor: pointer;
     align-items: center;
@@ -25,13 +24,11 @@ input[type="file"] {
     display: flex;
     padding: 20px 40px;
     margin: 20px;
-
     transition: all 0.2s ease;
 }
 
 .upload-file__button:hover {
-    background-color: darken(#186cb5, 15%);
+    background-color: darken(#0d98ba, 7%);
     transform: translateY(-3px);
     transition: all 0.2s ease;
-
 }
