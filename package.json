@@ -2,7 +2,7 @@
   "name": "signinterpreterssl",
   "version": "0.1.0",
   "engines": {
-    "node": "12.16.1"
+    "node": "12.16.2"
   },
   "private": true,
   "dependencies": {
