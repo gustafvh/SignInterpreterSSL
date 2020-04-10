@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": "12.16.2"
+    "node": "6.11.1"
   },
   "dependencies": {
     "@google-cloud/text-to-speech": "^2.3.0",
