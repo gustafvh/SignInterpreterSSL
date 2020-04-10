@@ -30,6 +30,7 @@ export default class App extends Component {
         <div>
           <div className="app__container">
             <Header/>
+            {console.log(process.env)}
             <UploadImage changeCurrentStep={this.changeCurrentStep}/>
             <Footer changeCurrentStep={this.changeCurrentStep} currentStep={this.state.currentStep} />
           </div>
