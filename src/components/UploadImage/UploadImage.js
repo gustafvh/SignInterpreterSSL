@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import UploadImageButton from "./UploadImageButton.js";
-import firebase from "../../config/firebase";
-import Environment from "../../config/environment";
+import firebase from "../../firebase";
 import "./LoadingIcon.scss";
 import "./UploadImage.scss";
 import oneSign from "../../assets/icons/one-finger.png";
@@ -74,7 +73,7 @@ export default class UploadImage extends Component {
       });
       let response = await fetch(
         "https://vision.googleapis.com/v1/images:annotate?key=" +
-          Environment["GOOGLE_CLOUD_VISION_API_KEY"],
+        process.env.GOOGLE_CLOUD_VISION_API_KEY,
         {
           headers: {
             Accept: "application/json",

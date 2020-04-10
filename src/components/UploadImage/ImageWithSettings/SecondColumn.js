@@ -3,7 +3,6 @@ import "../LoadingIcon.scss";
 import smileyIcon from "../../../assets/icons/smiley-icon.png";
 import resetIcon from "../../../assets/icons/reset-icon.png";
 import "./SecondColumn.scss";
-//import Environment from "../../../config/environment";
 export default class SecondColumn extends Component {
     
     render() {

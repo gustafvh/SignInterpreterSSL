@@ -6,8 +6,6 @@ import Footer from './components/Footer/Footer.js';
 import "normalize.css/normalize.css"; //NP, Resettar alla browsers default grejer
 
 import React, { Component } from 'react'
-import Environment from "./config/environment";
-
 
 export default class App extends Component {
   constructor(props) {
