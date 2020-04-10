@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 from PIL import Image
 import numpy as np
 import cv2
@@ -15,7 +16,7 @@ from tensorflow.keras.preprocessing import image
 
 TRAINING_DATA_SET_PATH = '/content/SSL-Dataset/train'
 VALIDATION_DATA_SET_PATH = '/content/SSL-Dataset/test'
-TEST_DATA_SET_PATH = './test-images'
+TEST_DATA_SET_PATH = '../data/test-images/G/'
 LOGS_PATH = '/content/logs'
 EPOCHS = 10
 BATCH_SIZE = 32
@@ -115,28 +116,57 @@ def showImageCV(imagePath, top_three_preds):
     cv2.waitKey(0)
 
 
+#Method for streaming video from webcam 
+def videoStream(finalModel):
+    #Set source to webcam
+    capture = cv2.VideoCapture(0)
+
+    #continuous stream
+    while(True):
+        #Set the width and height to 240*240
+        ret = capture.set(3,240)
+        ret = capture.set(4,240)
+
+        # Capture frame-by-frame
+        ret, frame = capture.read()
+        #gray = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+
+        # Display the frame
+        cv2.imshow('frame', frame)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+        cv2.imwrite('gray.png', frame)
+        #Saves png!!!!
+
+        #Här ta varje bild och (spara ner först?) och skicka in i predict single image
+        #predictions = predictSingleImage(imagePath, finalModel)[0]
+
+    # Release the capture
+    capture.release()
+    cv2.destroyAllWindows()
 
 
 def mainPipeline():
+    
     finalModel = loadModelFromFile('./savedModels/model96.hdf5')
+    videoStream(finalModel)
+    #tfjs.converters.save_keras_model(finalModel, './output')
 
-    tfjs.converters.save_keras_model(finalModel, './output')
-
-    imagePath = './test-images/G/G1.jpg'
+    #imagePath = '../data/test-images/G/G.jpg'
 
 
-    filenames = test_generator.filenames
-    letter = filenames[0][0]
+    #filenames = test_generator.filenames
+    #letter = filenames[0][0]
     #predictions = finalModel.predict_generator(test_generator,steps = len(filenames))[0]
-    predictions = predictSingleImage(imagePath, finalModel)[0]
+    #predictions = predictSingleImage(imagePath, finalModel)[0]
 
     print('*****************************************************')
     #print(predictions)
     #loss, accuracy = evaluateModel(finalModel)
     #print("Loss: ", loss, "Accuracy: ", accuracy * 100, '%')
-    print('Input was:', letter)
-    top_three_preds, all_preds = getTopPredictions(predictions)
-    print(top_three_preds)
+    #print('Input was:', letter)
+    #top_three_preds, all_preds = getTopPredictions(predictions)
+    #print(top_three_preds)
     # print(finalModel.summary())
 
     #showImageCV(imagePath, top_three_preds)
