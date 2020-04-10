@@ -2,6 +2,9 @@
   "name": "signinterpreterssl",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "12.16.2"
+  },
   "dependencies": {
     "@google-cloud/text-to-speech": "^2.3.0",
     "@mars/heroku-js-runtime-env": "^3.0.2",
