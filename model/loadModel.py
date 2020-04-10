@@ -117,7 +117,7 @@ def showImageCV(imagePath, top_three_preds):
 
 
 #Method for streaming video from webcam 
-def videoStream():
+def videoStream(finalModel):
     #Set source to webcam
     capture = cv2.VideoCapture(0)
 
@@ -135,6 +135,11 @@ def videoStream():
         cv2.imshow('frame', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
+        cv2.imwrite('gray.png', frame)
+        #Saves png!!!!
+
+        #Här ta varje bild och (spara ner först?) och skicka in i predict single image
+        #predictions = predictSingleImage(imagePath, finalModel)[0]
 
     # Release the capture
     capture.release()
@@ -142,16 +147,16 @@ def videoStream():
 
 
 def mainPipeline():
-    videoStream();
+    
     finalModel = loadModelFromFile('./savedModels/model96.hdf5')
+    videoStream(finalModel)
+    #tfjs.converters.save_keras_model(finalModel, './output')
 
-    tfjs.converters.save_keras_model(finalModel, './output')
-
-    imagePath = '../data/test-images/G/G.jpg'
+    #imagePath = '../data/test-images/G/G.jpg'
 
 
-    filenames = test_generator.filenames
-    letter = filenames[0][0]
+    #filenames = test_generator.filenames
+    #letter = filenames[0][0]
     #predictions = finalModel.predict_generator(test_generator,steps = len(filenames))[0]
     #predictions = predictSingleImage(imagePath, finalModel)[0]
 
