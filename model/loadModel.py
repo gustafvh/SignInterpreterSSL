@@ -118,11 +118,11 @@ def showImageCV(imagePath, top_three_preds):
 
 
 def mainPipeline():
-    finalModel = loadModelFromFile('./savedModels/model96.hdf5')
+    finalModel = loadModelFromFile('./savedModels/model95.h5')
 
     tfjs.converters.save_keras_model(finalModel, './output')
 
-    imagePath = './test-images/G/G1.jpg'
+    imagePath = './test-images/S/S5.jpg'
 
 
     filenames = test_generator.filenames
@@ -139,6 +139,6 @@ def mainPipeline():
     print(top_three_preds)
     # print(finalModel.summary())
 
-    #showImageCV(imagePath, top_three_preds)
+    showImageCV(imagePath, top_three_preds)
 
 mainPipeline()
