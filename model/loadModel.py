@@ -155,6 +155,7 @@ def mainPipeline():
     #imagePath = '../data/test-images/G/G.jpg'
 
 
+
     #filenames = test_generator.filenames
     #letter = filenames[0][0]
     #predictions = finalModel.predict_generator(test_generator,steps = len(filenames))[0]
@@ -169,6 +170,6 @@ def mainPipeline():
     #print(top_three_preds)
     # print(finalModel.summary())
 
-    #showImageCV(imagePath, top_three_preds)
+    showImageCV(imagePath, top_three_preds)
 
 mainPipeline()
