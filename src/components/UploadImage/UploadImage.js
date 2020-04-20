@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import UploadImageButton from "./UploadImageButton.js";
-import firebase from "../../config/firebase";
+import firebase from "../../firebase";
 import "./LoadingIcon.scss";
 import "./UploadImage.scss";
 import oneSign from "../../assets/icons/one-finger.png";
