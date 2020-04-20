@@ -26,7 +26,7 @@ export default class App extends Component {
   
 
   render() {
-    console.log(process.env)
+    //console.log(process.env)
     return (
         <div>
           <div className="app__container">
