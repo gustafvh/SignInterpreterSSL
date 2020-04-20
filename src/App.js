@@ -4,7 +4,7 @@ import Header from './components/Header/Header.js';
 import Footer from './components/Footer/Footer.js';
 
 import "normalize.css/normalize.css"; //NP, Resettar alla browsers default grejer
-
+import 'dotenv';
 import React, { Component } from 'react'
 
 export default class App extends Component {
@@ -26,6 +26,7 @@ export default class App extends Component {
   
 
   render() {
+    //console.log(process.env)
     return (
         <div>
           <div className="app__container">
