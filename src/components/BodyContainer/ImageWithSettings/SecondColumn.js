@@ -10,9 +10,16 @@ export default class SecondColumn extends Component {
         <div>
             <div className="container">
                 <div className="second-column">
-                    <p> Your sign: </p> 
-                    {/* <p>Listen to the corresponding verbal letter here: </p> */}
-                    {/* {this.toAudio()}  */}
+                    <p> Your sign translates to the letter:</p>
+                    {!this.props.loading &&
+                    <ul>
+                        <li>{this.props.predictions[0].letter} with {this.props.predictions[0].confidence}% confidence </li>
+                        <li>{this.props.predictions[1].letter} with {this.props.predictions[1].confidence}% confidence</li>
+                        <li>{this.props.predictions[2].letter} with {this.props.predictions[2].confidence}% confidence</li>
+                    </ul>
+                    }
+                     {/*<p>Listen to the corresponding verbal letter here: </p>*/}
+                     {/*{this.toAudio()}*/}
                 </div>
                 <div onClick={ () => window.location.reload()} style={{display: "flex", justifyContent:"center"}}><button className="restart__button">Upload another image! <img style={{marginLeft: "10px"}} height="20px" alt="upload icon" src={resetIcon}/> </button></div>
             </div>
