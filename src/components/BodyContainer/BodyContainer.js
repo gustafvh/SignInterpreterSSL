@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import UploadImageButton from "./UploadImageButton.js";
 import firebase from "../../firebase";
 import "./LoadingIcon.scss";
 import "./UploadImage.scss";
@@ -9,6 +8,8 @@ import threeSign from "../../assets/icons/three-fingers.png";
 
 // import image from "../../assets/images/image.png";
 import ImageWithSettings from "./ImageWithSettings/ImageWithSettings.js";
+import uploadIcon from "../../assets/icons/upload-icon.png";
+import axios from "axios";
 
 export default class UploadImage extends Component {
   constructor(props) {
@@ -16,18 +17,49 @@ export default class UploadImage extends Component {
 
     this.state = {
       uploadedFileUrl: "",
-      uploadingImage: false,
+      loading: false,
       imageHasUploaded: false,
       imageName: "",
       googleResponse: undefined,
       similairImagesUrls: [],
-      imageLabels: []
+      imageLabels: [],
+      responseFromAPI: '',
+      imageFile: null
     };
+  }
+
+  getUploadedFileAsBinary = event => {
+    this.setState({
+      imageFile: event.target.files[0],
+    });
+    console.log(event.target.files[0]);
+  };
+
+  sendToAPI = () => {
+    try {
+      this.setState({
+        loading: true
+      });
+      const data = new FormData()
+      data.append('image', this.state.imageFile)
+      axios.post("http://localhost:5000/predict", data, {}).then(response => {
+        this.setState({
+          responseFromAPI: response,
+          loading: false
+        });
+        console.log(response.data.predictions)
+      })
+      this.props.changeCurrentStep(2);
+    }
+    catch(error) {
+      console.log(error)
+    }
+
   }
 
   uploadToFirebaseStorage = async event => {
     this.setState({
-      uploadingImage: true
+      loading: true
     });
 
     let fileName = event.target.value;
@@ -43,7 +75,7 @@ export default class UploadImage extends Component {
 
     this.setState({
       uploadedFileUrl: imageUrl,
-      uploadingImage: false,
+      loading: false,
       gettingAPIResponse: false,
       imageHasUploaded: true,
       imageName: fileName
@@ -118,7 +150,7 @@ export default class UploadImage extends Component {
   render() {
     return (
       <div>
-        {this.state.uploadingImage ? (
+        {this.state.loading ? (
           <div className="loading-icon__container">
             <div className="lds-ellipsis">
               <div></div>
@@ -145,9 +177,14 @@ export default class UploadImage extends Component {
             <img className="sign-two" src={twoSign} alt="sign-two" style={{height: "80px"}}/>
             <img className="sign-three" src={threeSign} alt="sign-three" style={{height: "80px"}}/>
             {/* "Icons made by Freepik from www.flaticon.com" */}
-            <UploadImageButton
-              uploadToFirebaseStorage={this.uploadToFirebaseStorage}
-            />
+            <button type="button" onClick={this.sendToAPI}>Translate!</button>
+            <label htmlFor="file-upload" className="upload-file__button">    {/* Is what is visible*/}
+              Select Image<img style={{marginLeft: "10px"}} height="20px" alt="upload icon" src={uploadIcon}/>
+            </label>
+            <input id="file-upload" className="upload-file__button"
+                   type="file" accept="image/*"
+                   onChange={this.getUploadedFileAsBinary}/>
+            {/* Is hidden via scss-file but contains the logic*/}
           </div>
         )}
       </div>
