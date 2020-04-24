@@ -44,7 +44,7 @@ export default class BodyContainer extends Component {
         loading: true
       });
       const data = new FormData()
-      data.append('image', this.state.imageFile)
+      data.append('image', this.props.webcamCapture ? this.props.webcamCapture : this.state.imageFile)
       axios.post("https://sign-interpreter.com/predict", data, {}).then(response => {
         let predictions = this.filterPredictions(response.data.predictions)
         this.setState({
@@ -54,7 +54,6 @@ export default class BodyContainer extends Component {
         });
         console.log("Response from API:" + response.data.predictions)
       }).then(this.setState({ loading: false }));
-      this.props.changeCurrentStep(2);
     }
     catch(error) {
       console.log(error)
@@ -66,7 +65,9 @@ export default class BodyContainer extends Component {
 
   renderUploadButtonBeforeUpload = () => {
     return (
-        <div>
+        <div className="buttons-container">
+          <button type="button" className="upload-file__button" onClick={this.props.startWebcam}>
+            Use Webcam </button>
           <label htmlFor="file-upload" className="upload-file__button">    {/* Is what is visible*/}
             Upload Image
             <img style={{marginLeft: "10px"}} height="20px" alt="upload icon" src={uploadIcon}/>
@@ -115,6 +116,7 @@ export default class BodyContainer extends Component {
             />
           </div>
         ) : (
+
           <div className="signs-button__container">
             <div className="signs-icons__container">
               <img className="sign-one" src={oneSign} alt="sign-one" style={{height: "80px", marginLeft: "5px"}}/>

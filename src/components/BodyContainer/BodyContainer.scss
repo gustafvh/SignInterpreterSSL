@@ -16,6 +16,11 @@ input[type="file"] {
     flex-direction: column;
 }
 
+.buttons-container {
+    display: flex;
+    flex-direction: row;
+}
+
 .upload__disclaimer {
     color: #333;
     font-size: 12px;
@@ -28,6 +33,7 @@ input[type="file"] {
 
 .upload-file__button {
     //height: 66px;
+    min-width: 150px;
     max-width: 300px;
     font-family: 'Open Sans', sans-serif;
     color: #eee;
