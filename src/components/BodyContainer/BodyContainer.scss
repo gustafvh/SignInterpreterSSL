@@ -1,8 +1,3 @@
-.emoji-image {
-    height: 30vh;
-
-}
-
 .upload-file__container {
     justify-content: center;
     display: flex;
@@ -14,14 +9,32 @@ input[type="file"] {
     display: none;
 }
 
+.signs-button__container {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.upload__disclaimer {
+    color: #333;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    background-color: #eee;
+    padding: 20px;
+    border-radius: 10px;
+}
+
 .upload-file__button {
     //height: 66px;
-    //width: 330px;
+    max-width: 300px;
     font-family: 'Open Sans', sans-serif;
     color: #eee;
     font-weight: bold;
     border-radius: 15px;
-    background-color: #0d98ba;
+    border-width: 0;
+    background-color: #3399FF;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
     cursor: pointer;
     align-items: center;
@@ -33,7 +46,7 @@ input[type="file"] {
 }
 
 .upload-file__button:hover {
-    background-color: darken(#0d98ba, 7%);
+    background-color: darken(#3399FF, 7%);
     transform: translateY(-3px);
     transition: all 0.2s ease;
 }

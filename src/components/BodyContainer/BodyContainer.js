@@ -1,14 +1,14 @@
 import React, { Component } from "react";
-import firebase from "../../firebase";
 import "./LoadingIcon.scss";
-import "./UploadImage.scss";
+import "./BodyContainer.scss";
 import oneSign from "../../assets/icons/one-finger.png";
 import twoSign from "../../assets/icons/two-fingers.png";
 import threeSign from "../../assets/icons/three-fingers.png";
 
 // import image from "../../assets/images/image.png";
-import ImageWithSettings from "./ImageWithSettings/ImageWithSettings.js";
+import UploadedImage from "./UploadedImage/UploadedImage.js";
 import uploadIcon from "../../assets/icons/upload-icon.png";
+import questionMark from "../../assets/icons/question-mark-icon.png";
 import axios from "axios";
 
 export default class BodyContainer extends Component {
@@ -31,8 +31,12 @@ export default class BodyContainer extends Component {
       imageFile: event.target.files[0],
       imageFileObjectURL: URL.createObjectURL(event.target.files[0])
     });
-    console.log(event.target.files[0]);
+    console.log("Uploaded File:" + event.target.files[0]);
   };
+
+  filterPredictions = (predictions) => {
+    return predictions.map(pred => ({ letter: pred.letter.replace('O1','Ö'), confidence: pred.confidence.toFixed(2) }));
+  }
 
   sendToAPI = () => {
     try {
@@ -42,18 +46,46 @@ export default class BodyContainer extends Component {
       const data = new FormData()
       data.append('image', this.state.imageFile)
       axios.post("https://sign-interpreter.com/predict", data, {}).then(response => {
+        let predictions = this.filterPredictions(response.data.predictions)
         this.setState({
           responseFromAPI: response,
-          predictions: response.data.predictions,
+          predictions: predictions,
           loading: false
         });
-        console.log(response.data.predictions)
+        console.log("Response from API:" + response.data.predictions)
       }).then(this.setState({ loading: false }));
       this.props.changeCurrentStep(2);
     }
     catch(error) {
       console.log(error)
     }
+
+  }
+
+
+
+  renderUploadButtonBeforeUpload = () => {
+    return (
+        <div>
+          <label htmlFor="file-upload" className="upload-file__button">    {/* Is what is visible*/}
+            Upload Image
+            <img style={{marginLeft: "10px"}} height="20px" alt="upload icon" src={uploadIcon}/>
+          </label>
+          <input id="file-upload" className="upload-file__button"
+                 type="file" accept="image/*"
+                 onChange={this.getUploadedFileAsBinary}/>
+          {/* Is hidden via scss-file but contains the logic*/}
+        </div>
+    )
+  }
+
+  renderUploadButtonAfterUpload = () => {
+    return (
+        <button type="button" className="upload-file__button" onClick={this.sendToAPI}>
+          Interpret {this.state.imageFile.name.length > 10 ?
+            (this.state.imageFile.name.substring(0,10) + "...")
+            : this.state.imageFile.name.substring(0,10)}</button>
+    )
 
   }
 
@@ -76,32 +108,25 @@ export default class BodyContainer extends Component {
         {this.state.loading ? this.renderloadingElement()
          : this.state.responseFromAPI ? (
           <div>
-            <ImageWithSettings
+            <UploadedImage
               imageFileObjectURL={this.state.imageFileObjectURL}
               imageFile={this.state.imageFile}
               predictions={this.state.predictions}
             />
           </div>
         ) : (
-          <div style={{justifyContent: "center"}}>
-            <img className="sign-one" src={oneSign} alt="sign-one" style={{height: "80px", marginLeft: "5px"}}/>
-            <img className="sign-two" src={twoSign} alt="sign-two" style={{height: "80px"}}/>
-            <img className="sign-three" src={threeSign} alt="sign-three" style={{height: "80px"}}/>
-            {/* "Icons made by Freepik from www.flaticon.com" */}
-            {(!this.state.imageFile) ? (
-                <div>
-                  <label htmlFor="file-upload" className="upload-file__button">    {/* Is what is visible*/}
-                    Upload Image
-                    <img style={{marginLeft: "10px"}} height="20px" alt="upload icon" src={uploadIcon}/>
-                  </label>
-                  <input id="file-upload" className="upload-file__button"
-                         type="file" accept="image/*"
-                         onChange={this.getUploadedFileAsBinary}/>
-                  {/* Is hidden via scss-file but contains the logic*/}
-                </div>
-            ) : <button type="button" className="upload-file__button" onClick={this.sendToAPI}>Translate!</button>
+          <div className="signs-button__container">
+            <div className="signs-icons__container">
+              <img className="sign-one" src={oneSign} alt="sign-one" style={{height: "80px", marginLeft: "5px"}}/>
+              <img className="sign-two" src={twoSign} alt="sign-two" style={{height: "80px"}}/>
+              <img className="sign-three" src={threeSign} alt="sign-three" style={{height: "80px"}}/>
+              {/* "Icons made by Freepik from www.flaticon.com" */}
+            </div>
+            {(!this.state.imageFile) ?  this.renderUploadButtonBeforeUpload()
+             : this.renderUploadButtonAfterUpload()
             }
-                </div>
+            <p className="upload__disclaimer"> <img style={{margin: "0px 5px"}} height="12px" alt="upload icon" src={questionMark}/> Don't worry, we will not use or save your image anywhere.</p>
+          </div>
         )}
       </div>
     );

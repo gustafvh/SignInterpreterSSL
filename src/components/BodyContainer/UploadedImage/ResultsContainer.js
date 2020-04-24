@@ -1,29 +1,33 @@
 import React, { Component } from 'react';
 import "../LoadingIcon.scss";
-import smileyIcon from "../../../assets/icons/smiley-icon.png";
 import resetIcon from "../../../assets/icons/reset-icon.png";
-import "./SecondColumn.scss";
-export default class SecondColumn extends Component {
+import "./ResultsContainer.scss";
+export default class ResultsContainer extends Component {
+
+    renderSinglePrediction = (indexInPreds) => {
+        return (
+            <p className="single-prediction__container"><a className="preds-letter">{this.props.predictions[indexInPreds].letter} </a> &nbsp; <a style={{color: "#333"}}> {this.props.predictions[indexInPreds].confidence}% confidence</a> </p>
+        )
+    }
     
     render() {
         return (
         <div>
-            <div className="container">
                 <div className="second-column">
-                    <p> Your sign translates to the letter:</p>
+                    <p className="second-column--title-text"> Your sign translates to the letter</p>
                     {!this.props.loading &&
-                    <ul>
-                        <li>{this.props.predictions[0].letter} with {this.props.predictions[0].confidence}% confidence </li>
-                        <li>{this.props.predictions[1].letter} with {this.props.predictions[1].confidence}% confidence</li>
-                        <li>{this.props.predictions[2].letter} with {this.props.predictions[2].confidence}% confidence</li>
-                    </ul>
+                    <div>
+                        {this.renderSinglePrediction(0)}
+                        {this.renderSinglePrediction(1)}
+                        {this.renderSinglePrediction(2)}
+                    </div>
                     }
                      {/*<p>Listen to the corresponding verbal letter here: </p>*/}
                      {/*{this.toAudio()}*/}
                 </div>
-                <div onClick={ () => window.location.reload()} style={{display: "flex", justifyContent:"center"}}><button className="restart__button">Upload another image! <img style={{marginLeft: "10px"}} height="20px" alt="upload icon" src={resetIcon}/> </button></div>
+                <div onClick={ () => window.location.reload()}>
+                    <button className="upload-file__button">Upload another image <img style={{marginLeft: "10px"}} height="20px" alt="upload icon" src={resetIcon}/> </button></div>
             </div>
-        </div>
         )
     }
 }

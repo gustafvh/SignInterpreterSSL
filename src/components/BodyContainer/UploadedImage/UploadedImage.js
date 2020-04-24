@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
-import "./ImageWithSettings.scss";
-import SecondColumn from './SecondColumn.js';
+import "./UploadedImage.scss";
+import ResultsContainer from './ResultsContainer.js';
 
-export default class ImageWithSettings extends Component {
+export default class UploadedImage extends Component {
     render() {
         return (
         <div>
             <div className="container">
                 <div className="first-column">
                     <img className="image" src={this.props.imageFileObjectURL} alt=""/>
-                    <p> Your image: {this.props.imageFile.name} </p>
+                    <p className="filename-image-text"> Image Uploaded: {this.props.imageFile.name} </p>
                 </div>
-                <SecondColumn predictions={this.props.predictions}/>
+                <ResultsContainer predictions={this.props.predictions}/>
             </div>
         </div>
 
