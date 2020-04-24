@@ -41,7 +41,7 @@ export default class BodyContainer extends Component {
       });
       const data = new FormData()
       data.append('image', this.state.imageFile)
-      axios.post("http://35.198.151.110/predict", data, {}).then(response => {
+      axios.post("https://sign-interpreter.com/predict", data, {}).then(response => {
         this.setState({
           responseFromAPI: response,
           predictions: response.data.predictions,

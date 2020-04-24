@@ -7,7 +7,6 @@ import "normalize.css/normalize.css"; //NP, Resettar alla browsers default greje
 import 'dotenv';
 import React, { Component } from 'react'
 import firebase from "./firebase";
-import uploadIcon from "./assets/icons/upload-icon.png";
 
 
 
