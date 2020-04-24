@@ -6,7 +6,7 @@ export default class ResultsContainer extends Component {
 
     renderSinglePrediction = (indexInPreds) => {
         return (
-            <p className="single-prediction__container"><a className="preds-letter">{this.props.predictions[indexInPreds].letter} </a> &nbsp; <a style={{color: "#333"}}> {this.props.predictions[indexInPreds].confidence}% confidence</a> </p>
+            <p className="single-prediction__container"><a className="preds-letter">{this.props.predictions[indexInPreds].letter} </a> &nbsp; <a style={{color: "#333"}}> with {this.props.predictions[indexInPreds].confidence}% confidence</a> </p>
         )
     }
     
@@ -14,7 +14,7 @@ export default class ResultsContainer extends Component {
         return (
         <div>
                 <div className="second-column">
-                    <p className="second-column--title-text"> Your sign translates to the letter</p>
+                    <p className="second-column--title-text"> Your sign translates to the letter:</p>
                     {!this.props.loading &&
                     <div>
                         {this.renderSinglePrediction(0)}

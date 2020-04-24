@@ -35,7 +35,7 @@ export default class BodyContainer extends Component {
   };
 
   filterPredictions = (predictions) => {
-    return predictions.map(pred => ({ letter: pred.letter.replace('O1','Ö'), confidence: pred.confidence.toFixed(2) }));
+    return predictions.map(pred => ({ letter: pred.letter.replace('O1','Ö').replace('A1','Å').replace('A2','Ä'), confidence: pred.confidence.toFixed(2) }));
   }
 
   sendToAPI = () => {
