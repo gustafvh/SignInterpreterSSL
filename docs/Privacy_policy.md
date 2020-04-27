@@ -1,7 +1,7 @@
 ## Privacy Policy
 
 **What data we collect:**
-We do not collect any of the images that are submitted through the app. The image is transfered to our API 
+We do not collect any of the images that are submitted through the app. The image is transfered to our
 [API]((https://github.com/gustafvh/sign-interpreter-ssl-api "Repository for our API") using TLS-encrypted communication for prediction but is never stored or kept for later use. We may collect anonymized user-data for analytics-purposes but the data does not allow us to identify individual users.
 
 **How we use your data:**
