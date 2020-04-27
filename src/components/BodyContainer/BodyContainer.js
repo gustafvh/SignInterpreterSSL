@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./LoadingIcon.scss";
 import "./BodyContainer.scss";
 import oneSign from "../../assets/icons/one-finger.png";
+import signBody from "../../assets/images/sign-body.png";
 import twoSign from "../../assets/icons/two-fingers.png";
 import threeSign from "../../assets/icons/three-fingers.png";
 
@@ -128,9 +129,10 @@ export default class BodyContainer extends Component {
 
           <div className="signs-button__container">
             <div className="signs-icons__container">
-              <img className="sign-one" src={oneSign} alt="sign-one" style={{height: "80px", marginLeft: "5px"}}/>
-              <img className="sign-two" src={twoSign} alt="sign-two" style={{height: "80px"}}/>
-              <img className="sign-three" src={threeSign} alt="sign-three" style={{height: "80px"}}/>
+              <img className="sign-one" src={signBody} alt="sign-one" style={{height: "250px", marginLeft: "5px"}}/>
+              {/*<img className="sign-one" src={oneSign} alt="sign-one" style={{height: "80px", marginLeft: "5px"}}/>*/}
+              {/*<img className="sign-two" src={twoSign} alt="sign-two" style={{height: "80px"}}/>*/}
+              {/*<img className="sign-three" src={threeSign} alt="sign-three" style={{height: "80px"}}/>*/}
               {/* "Icons made by Freepik from www.flaticon.com" */}
             </div>
             {(!this.state.imageFile) ?  this.renderUploadButtonBeforeUpload()

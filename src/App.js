@@ -75,7 +75,7 @@ export default class App extends Component {
                 <Webcam
                     audio={false}
                     height={450}
-                    mirrored={true}
+                    mirrored={false}
                     ref={'webcamRef'}
                     screenshotFormat="image/jpg"
                     width={800}
