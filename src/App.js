@@ -36,16 +36,16 @@ export default class App extends Component {
     })
   }
 
-  encodeImageToBlob = (dataURI) => {
+  encodeImageToBlob = (base64String) => {
 
-        var byteString = atob(dataURI.split(',')[1]);
-        var ab = new ArrayBuffer(byteString.length);
-        var ia = new Uint8Array(ab);
+        let byteString = atob(base64String.split(',')[1]);
+        let byteStringLength = new ArrayBuffer(byteString.length);
+        let intArray = new Uint8Array(byteStringLength);
 
-        for (var i = 0; i < byteString.length; i++) {
-            ia[i] = byteString.charCodeAt(i);
+        for (let i = 0; i < byteString.length; i++) {
+            intArray[i] = byteString.charCodeAt(i);
         }
-        return new Blob([ab], { type: 'image/jpeg' });
+        return new Blob([intArray], { type: 'image/jpeg' });
     }
 
   takeSnaphotFromWebcam = () => {
