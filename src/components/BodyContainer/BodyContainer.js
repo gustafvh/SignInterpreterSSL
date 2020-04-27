@@ -8,6 +8,7 @@ import threeSign from "../../assets/icons/three-fingers.png";
 // import image from "../../assets/images/image.png";
 import UploadedImage from "./UploadedImage/UploadedImage.js";
 import uploadIcon from "../../assets/icons/upload-icon.png";
+import cameraIcon from "../../assets/icons/camera-icon.png";
 import questionMark from "../../assets/icons/question-mark-icon.png";
 import axios from "axios";
 
@@ -24,6 +25,12 @@ export default class BodyContainer extends Component {
       imageFileObjectURL: null,
 
     };
+  }
+
+  componentDidMount() {
+    if(this.props.webcamCapture){
+      this.sendToAPI()
+    }
   }
 
   getUploadedFileAsBinary = event => {
@@ -44,7 +51,7 @@ export default class BodyContainer extends Component {
         loading: true
       });
       const data = new FormData()
-      data.append('image', this.props.webcamCapture ? this.props.webcamCapture : this.state.imageFile)
+      data.append('image', this.props.webcamCaptureBinary ? this.props.webcamCaptureBinary : this.state.imageFile)
       axios.post("https://sign-interpreter.com/predict", data, {}).then(response => {
         let predictions = this.filterPredictions(response.data.predictions)
         this.setState({
@@ -66,9 +73,7 @@ export default class BodyContainer extends Component {
   renderUploadButtonBeforeUpload = () => {
     return (
         <div className="buttons-container">
-          <button type="button" className="upload-file__button" onClick={this.props.startWebcam}>
-            Use Webcam </button>
-          <label htmlFor="file-upload" className="upload-file__button">    {/* Is what is visible*/}
+          <label htmlFor="file-upload" className="upload-file__button upload-file__button-grey">    {/* Is what is visible*/}
             Upload Image
             <img style={{marginLeft: "10px"}} height="20px" alt="upload icon" src={uploadIcon}/>
           </label>
@@ -76,6 +81,9 @@ export default class BodyContainer extends Component {
                  type="file" accept="image/*"
                  onChange={this.getUploadedFileAsBinary}/>
           {/* Is hidden via scss-file but contains the logic*/}
+          <button type="button" className="upload-file__button" onClick={this.props.startWebcam}>
+            Use Webcam <img style={{marginLeft: "10px"}} height="20px" alt="camera icon" src={cameraIcon}/>
+          </button>
         </div>
     )
   }
@@ -113,6 +121,7 @@ export default class BodyContainer extends Component {
               imageFileObjectURL={this.state.imageFileObjectURL}
               imageFile={this.state.imageFile}
               predictions={this.state.predictions}
+              webcamCapture={this.props.webcamCapture}
             />
           </div>
         ) : (

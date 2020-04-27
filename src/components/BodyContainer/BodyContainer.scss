@@ -51,8 +51,35 @@ input[type="file"] {
     transition: all 0.2s ease;
 }
 
+.upload-file__button-grey {
+    color: #fff;
+    background-color: #aaa;
+
+}
+
+.upload-file__button-red {
+    color: #eee;
+    background-color: #FF3366;
+
+}
+
+
+
 .upload-file__button:hover {
     background-color: darken(#3399FF, 7%);
+    transform: translateY(-3px);
+    transition: all 0.2s ease;
+}
+
+.upload-file__button-red:hover {
+    background-color: darken(#FF3366, 7%);
+    transform: translateY(-3px);
+    transition: all 0.2s ease;
+
+}
+
+.upload-file__button-grey:hover {
+    background-color: darken(#aaa, 7%);
     transform: translateY(-3px);
     transition: all 0.2s ease;
 }
