@@ -5,9 +5,9 @@ import os
 
 categories = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
               'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
-              'V', 'W', 'X', 'Y', 'Z', 'Å', 'Ä', 'Ö']
+              'V', 'W', 'X', 'Y', 'Z']
 
-# categories = ['A']
+#categories = ['Y']
 
 def createImagesFromClip(letter):
     folderPath = 'clips/' + letter + '/'
@@ -21,28 +21,28 @@ def createImagesFromClip(letter):
     counter = 0
     while True:
         live, frame = videoStream.read()
-        if live and currentframe <= 600:  # Continue as long as video still has frames
+        if live and currentframe <= 300:  # Continue as long as video still has frames
 
-            if currentframe <= 500: #Train/Test split
-                folder = 'train'
-            else:
-                folder = 'test'
+            folder = 'validation'
+            #folder = 'train'
             try:  # Create a folder if it doesnt exists
                 dataFolder = 'data/SSL-dataset/' + folder + '/' + letter
                 if not os.path.exists(dataFolder):
                     os.makedirs(dataFolder)
 
-
             except OSError:
                 pass
 
-            name = './data/SSL-dataset/' + folder + '/' + letter + '/' + letter + '1' + str(currentframe) + '.jpg'
+            name = './data/SSL-dataset/' + folder + '/' + letter + '/' + letter + 'S' + str(currentframe) + '.jpg' #For Sami
+            #name = './data/SSL-dataset/' + folder + '/' + letter + '/' + letter + 'P' + str(currentframe) + '.jpg' #For Patrik
+            #name = './data/SSL-dataset/' + folder + '/' + letter + '/' + letter + 'K' + str(currentframe) + '.jpg' #For Katarina
+
             print('Creating...' + name)
 
             #frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
 
             # Crop image. First is height
-            frame = frame[0:1080, 420:1500]
+            frame = frame[0:720, 180:900]
             frame = cv2.resize(frame, (224, 224))
 
             cv2.imwrite(name, frame)
