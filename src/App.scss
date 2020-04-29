@@ -9,6 +9,12 @@ html {
     font-family: $pfont;
 }
 
+.sign-person-overlay {
+    position: absolute;
+    width: 420px;
+
+}
+
 .app__container {
     justify-content: center;
     display: flex;

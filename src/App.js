@@ -6,12 +6,14 @@ import Footer from './components/Footer/Footer.js';
 import "normalize.css/normalize.css"; //NP, Resettar alla browsers default grejer
 import 'dotenv';
 import React, { Component } from 'react'
-import firebase from "./firebase";
+//import firebase from "./firebase";
 import Webcam from "react-webcam";
 
 import cameraIcon from "./assets/icons/camera-icon.png";
 import checkIcon from "./assets/icons/check-icon.png";
 import crossIcon from "./assets/icons/cross-icon.png";
+import signPerson from "./assets/images/sign-person-overlay.png";
+import questionMark from "./assets/icons/question-mark-icon.png";
 
 
 
@@ -69,9 +71,11 @@ export default class App extends Component {
                 <p className="header__big-title">Webcam</p>
                 {this.state.webcamCapture ?
                     <div>
-                    <img src={this.state.webcamCapture}/>
+                    <img alt="webcam campture" src={this.state.webcamCapture}/>
                     </div>
-                    :
+                    : (
+                        <>
+                    <img alt="signPerson" className="sign-person-overlay" src={signPerson}/>
                 <Webcam
                     audio={false}
                     height={450}
@@ -79,7 +83,9 @@ export default class App extends Component {
                     ref={'webcamRef'}
                     screenshotFormat="image/jpg"
                     width={800}
-                />}
+                />
+                            {/*<p className="upload__disclaimer"> <img style={{margin: "0px 5px"}} height="12px" alt="upload icon" src={questionMark}/> Position yourself so that your torso is roughly aligned with <br/> the outline above and make your sign in front of your chest.</p>*/}
+                </>)}
                 <div className="buttons-container">
                     {!this.state.webcamCapture && <button className="upload-file__button" onClick={this.takeSnaphotFromWebcam}>Capture Photo  <img style={{marginLeft: "10px"}} height="20px" alt="upload icon" src={cameraIcon}/></button>}
                     {this.state.webcamCapture && <button className="upload-file__button upload-file__button-red" onClick={()=> this.setState({webcamCapture: null})}>Retake Photo  <img style={{marginLeft: "10px"}} height="15px" alt="upload icon" src={crossIcon}/></button>}
