@@ -14,10 +14,10 @@ from tensorflow.keras.models import model_from_json
 from tensorflow.keras.callbacks import ModelCheckpoint, TensorBoard
 from tensorflow.keras.preprocessing import image
 
-TRAINING_DATA_SET_PATH = '/content/SSL-Dataset/train'
-VALIDATION_DATA_SET_PATH = '/content/SSL-Dataset/test'
-TEST_DATA_SET_PATH = '../data/test-images/G/'
-LOGS_PATH = '/content/logs'
+# TRAINING_DATA_SET_PATH = '/content/SSL-Dataset/train'
+# VALIDATION_DATA_SET_PATH = '/content/SSL-Dataset/test'
+#TEST_DATA_SET_PATH = '../data/test-images/A1.jpg'
+#LOGS_PATH = '/content/logs'
 EPOCHS = 10
 BATCH_SIZE = 32
 IMAGE_HEIGHT = 224
@@ -48,13 +48,13 @@ DATASET_CATEGORIES = 29
 #     batch_size=BATCH_SIZE,
 #     class_mode='categorical')
 
-test_datagen = ImageDataGenerator(preprocessing_function=preprocess_input)
+# test_datagen = ImageDataGenerator(preprocessing_function=preprocess_input)
 
-test_generator = test_datagen.flow_from_directory(
-    TEST_DATA_SET_PATH,
-    target_size=(IMAGE_WIDTH, IMAGE_HEIGHT),
-    batch_size=BATCH_SIZE,
-    class_mode='categorical')
+# test_generator = test_datagen.flow_from_directory(
+#     TEST_DATA_SET_PATH,
+#     target_size=(IMAGE_WIDTH, IMAGE_HEIGHT),
+#     batch_size=BATCH_SIZE,
+#     class_mode='categorical')
 
 def getTopPredictions(preds):
 
@@ -110,7 +110,7 @@ def showImageCV(imagePath, top_three_preds):
     image = cv2.imread(imagePath)
     output = image.copy()
     cv2.putText(output, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7,
-                (0, 0, 255), 2)
+                (255,153,51), 2)
     # show the output image
     cv2.imshow("Image", output)
     cv2.waitKey(0)
@@ -129,17 +129,19 @@ def videoStream(finalModel):
 
         # Capture frame-by-frame
         ret, frame = capture.read()
-        #gray = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
-        # Display the frame
+        top_three_preds, all_preds = getTopPredictions(predictSingleImage('singleFrame.png', finalModel)[0])
+        print('The letter is:', top_three_preds[0])
+
+        letter, accuracy = top_three_preds[0]
+        text = "{}: {:.2f}%".format(letter, accuracy * 100)
+        cv2.putText(frame, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7,
+                    (255,153,51), 2)
+
         cv2.imshow('frame', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
-        cv2.imwrite('gray.png', frame)
-        #Saves png!!!!
-
-        #Här ta varje bild och (spara ner först?) och skicka in i predict single image
-        #predictions = predictSingleImage(imagePath, finalModel)[0]
+        cv2.imwrite('singleFrame.png', frame)
 
     # Release the capture
     capture.release()
@@ -148,7 +150,7 @@ def videoStream(finalModel):
 
 def mainPipeline():
     
-    finalModel = loadModelFromFile('./savedModels/model96.hdf5')
+    finalModel = loadModelFromFile('../../best-models/model-quiet-dew-32.h5')
     videoStream(finalModel)
     #tfjs.converters.save_keras_model(finalModel, './output')
 
@@ -170,6 +172,6 @@ def mainPipeline():
     #print(top_three_preds)
     # print(finalModel.summary())
 
-    showImageCV(imagePath, top_three_preds)
+    #showImageCV(imagePath, top_three_preds)
 
 mainPipeline()
