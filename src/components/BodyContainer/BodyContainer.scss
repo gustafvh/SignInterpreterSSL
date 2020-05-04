@@ -16,6 +16,23 @@ input[type="file"] {
     flex-direction: column;
 }
 
+.signs-icons__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+
+    a {
+        color: #333;
+        transition: 0.2s ease all;
+    }
+
+    a:hover {
+        color: #3399FF;
+        transition: 0.2s ease all;
+    }
+}
+
 .buttons-container {
     display: flex;
     flex-direction: row;

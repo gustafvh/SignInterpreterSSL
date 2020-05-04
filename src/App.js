@@ -23,7 +23,6 @@ export default class App extends Component {
     super(props);
 
     this.state = {
-      currentStep: 1,
       gettingAPIResponse: false,
         webcamCapture: null,
         webcamCaptureBinary: null,
@@ -103,7 +102,6 @@ export default class App extends Component {
     return (
         <div>
           <div className="app__container">
-
             {this.state.webcamSelected && !this.state.photoUsed ?
             this.renderWebcamCapture()
                 : ( <div>
@@ -112,7 +110,7 @@ export default class App extends Component {
                            webcamCaptureBinary={this.state.webcamCaptureBinary}
                            startWebcam={this.startWebcam}/>
                 </div>)}
-                  <Footer currentStep={this.state.currentStep} />
+                  <Footer/>
           </div>
         </div>
     );
