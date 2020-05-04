@@ -127,7 +127,7 @@ export default class BodyContainer extends Component {
             <div className="signs-icons__container">
               <img className="sign-one" src={signBody} alt="sign-one" style={{height: "250px", marginLeft: "5px"}}/>
               {/* "Icons made by Freepik from www.flaticon.com" */}
-              <p><a href="https://teckensprakslexikon.su.se/kategori/handalfabetet" rel="noopener noreferrer" target="_blank">Dont know any signs? Click here for instructions.</a> </p>
+              <p><a href="https://teckensprakslexikon.su.se/kategori/handalfabetet" rel="noopener noreferrer" target="_blank">Don't know any signs? Click here for instructions.</a> </p>
             </div>
             {(!this.state.imageFile) ?  this.renderUploadButtonBeforeUpload()
              : this.renderUploadButtonAfterUpload()
