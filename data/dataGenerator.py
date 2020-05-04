@@ -36,15 +36,11 @@ def createImagesFromClip(letter, datasetID):
                 if not os.path.exists(dataFolder):
                     os.makedirs(dataFolder)
 
-
             except OSError:
                 pass
 
             name = './data/SSL-dataset/' + folder + '/' + letter + '/' + letter + datasetID + str(currentframe) + '.jpg'
             print('Creating...' + name)
-
-            #frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
-
             # Crop image. First is height
             frame = frame[0:1080, 200:960]
             frame = cv2.resize(frame, (224, 224))
@@ -64,8 +60,10 @@ def createImagesFromClip(letter, datasetID):
     cv2.destroyAllWindows()
 
 
+
 for id in datasetIDsFirst:
     for letter in categories:
         createImagesFromClip(letter, id)
         print('Done with', letter)
     print('Done with', id)
+
