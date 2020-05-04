@@ -64,7 +64,7 @@ def createImagesFromClip(letter, datasetID):
     cv2.destroyAllWindows()
 
 
-for id in datasetIDsSecond:
+for id in datasetIDsFirst:
     for letter in categories:
         createImagesFromClip(letter, id)
         print('Done with', letter)
