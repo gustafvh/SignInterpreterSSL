@@ -22,7 +22,7 @@ EPOCHS = 10
 BATCH_SIZE = 32
 IMAGE_HEIGHT = 224
 IMAGE_WIDTH = 224
-DATASET_CATEGORIES = 29
+DATASET_CATEGORIES = 26
 
 # train_datagen = ImageDataGenerator(preprocessing_function=preprocess_input,
 #                                    rotation_range=13,
@@ -62,8 +62,7 @@ def getTopPredictions(preds):
         'A': 0, 'B': 0, 'C': 0, 'D': 0, 'E': 0, 'F': 0, 'G': 0,
         'H': 0, 'I': 0, 'J': 0, 'K': 0, 'L': 0, 'M': 0, 'N': 0,
         'O': 0, 'P': 0, 'Q': 0, 'R': 0, 'S': 0, 'T': 0,
-        'U': 0, 'V': 0, 'W': 0, 'X': 0, 'Y': 0, 'Z': 0, 'Å': 0,
-        'Ä': 0, 'Ö': 0,
+        'U': 0, 'V': 0, 'W': 0, 'X': 0, 'Y': 0, 'Z': 0
     }
     # map preds index with probability to correct letter from dictonary
     for i, key in enumerate(predsDict, start=0):
@@ -88,6 +87,7 @@ def predictSingleImage(filepath, model):
     return predictions
 
 def loadModelFromFile(modelPath):
+    print("Loading model...", modelPath)
     loaded_model = keras.models.load_model(modelPath)
     print("Model loaded from", modelPath)
     return loaded_model
@@ -110,7 +110,7 @@ def showImageCV(imagePath, top_three_preds):
     image = cv2.imread(imagePath)
     output = image.copy()
     cv2.putText(output, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7,
-                (255,153,51), 2)
+                (0,255,4), 2)
     # show the output image
     cv2.imshow("Image", output)
     cv2.waitKey(0)
@@ -120,6 +120,9 @@ def showImageCV(imagePath, top_three_preds):
 def videoStream(finalModel):
     #Set source to webcam
     capture = cv2.VideoCapture(0)
+    predictionsBuffer = []
+    wordBuilder = []
+    startRecording = False
 
     #continuous stream
     while(True):
@@ -131,46 +134,95 @@ def videoStream(finalModel):
         ret, frame = capture.read()
 
         top_three_preds, all_preds = getTopPredictions(predictSingleImage('singleFrame.png', finalModel)[0])
-        print('The letter is:', top_three_preds[0])
-
+        #print('The letter is:', top_three_preds[0])
         letter, accuracy = top_three_preds[0]
-        text = "{}: {:.2f}%".format(letter, accuracy * 100)
-        cv2.putText(frame, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7,
-                    (255,153,51), 2)
+
+        if len(predictionsBuffer) >= 10 and startRecording:
+            predictionsBuffer = predictionsBuffer[1:]
+            predictionsBuffer.append(letter)
+        elif startRecording:
+            predictionsBuffer.append(letter)
+        if len(predictionsBuffer) >= 10:
+            isEqual = all(elem == predictionsBuffer[0] for elem in predictionsBuffer)
+            lastLetter = len(wordBuilder) <= 0 and '-' or wordBuilder[-1]
+            if isEqual and (letter != lastLetter) and startRecording:
+                wordBuilder.append(letter)
+                print('Added', letter)
+                cv2.putText(frame, 'Added ' + letter, (300, 320), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
+                            (0,255,4), 2)
+
+        keypress = cv2.waitKey(1) & 0xFF
+        if keypress == ord('s'):
+            startRecording = True
+            print('Started recording. Start signing.')
+            cv2.putText(frame, 'Started recording. Start signing.', (140, 320), cv2.FONT_HERSHEY_SIMPLEX, 0.7,
+                        (0,255,4), 2)
+        if keypress == 32:
+            print('Added space')
+            wordBuilder.append(' ')
+            cv2.putText(frame, 'Added space', (300, 320), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
+                        (0,255,4), 2)
+        if keypress == ord('d'):
+            wordBuilder = wordBuilder[:-1]
+            cv2.putText(frame, 'Delete last letter', (300, 320), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
+                        (0,255,4), 2)
+        if keypress == ord('r'):
+            cv2.putText(frame, 'Reset', (300, 320), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
+                        (0,255,4), 2)
+            wordBuilder = []
+        if keypress == ord('q') or keypress == 27:
+            break
+
+        if startRecording:
+            print(''.join(wordBuilder))
+        else:
+
+            cv2.putText(frame, 'Press S on keyboard to start interpreting.', (100, 320), cv2.FONT_HERSHEY_SIMPLEX, 0.7,
+                        (0,255,4), 2)
+            print('Press S on keyboard to start interpreting.')
+
+        text = "{} with {:.2f}% confidence".format(letter, accuracy * 100)
+        cv2.putText(frame, text, (120, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0,
+                    (0,255,4), 2)
+        cv2.putText(frame, (''.join(wordBuilder)), (210, 420), cv2.FONT_HERSHEY_SIMPLEX, 1.0,
+                    (0,255,4), 2)
+        cv2.putText(frame, 'Press:', (10, 380), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
+                    (0,255,4), 2)
+        cv2.putText(frame, 'd to delete', (10, 400), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
+                    (0,255,4), 2)
+        cv2.putText(frame, 'space for space', (10, 420), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
+                    (0,255,4), 2)
+        cv2.putText(frame, 'r to reset', (10, 440), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
+                    (0,255,4), 2)
+        cv2.putText(frame, 'q to quit', (10, 460), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
+                    (0,255,4), 2)
+
 
         cv2.imshow('frame', frame)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
+        # cv2.waitKey(30)
+
         cv2.imwrite('singleFrame.png', frame)
 
     # Release the capture
     capture.release()
     cv2.destroyAllWindows()
+    print('Exit Program')
 
 
 def mainPipeline():
     
-    finalModel = loadModelFromFile('../../best-models/model-quiet-dew-32.h5')
+    finalModel = loadModelFromFile('../../best-models/hearty-night-192.h5')
     videoStream(finalModel)
-    #tfjs.converters.save_keras_model(finalModel, './output')
-
     #imagePath = '../data/test-images/G/G.jpg'
-
-
-
-    #filenames = test_generator.filenames
-    #letter = filenames[0][0]
-    #predictions = finalModel.predict_generator(test_generator,steps = len(filenames))[0]
     #predictions = predictSingleImage(imagePath, finalModel)[0]
 
-    print('*****************************************************')
-    #print(predictions)
+    #print('*****************************************************')
     #loss, accuracy = evaluateModel(finalModel)
     #print("Loss: ", loss, "Accuracy: ", accuracy * 100, '%')
     #print('Input was:', letter)
     #top_three_preds, all_preds = getTopPredictions(predictions)
     #print(top_three_preds)
-    # print(finalModel.summary())
+    #print(finalModel.summary())
 
     #showImageCV(imagePath, top_three_preds)
 
