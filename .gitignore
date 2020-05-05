@@ -12,6 +12,7 @@ __pycache__
 *.hdf5
 *.h5
 .env
+singleFrame.png
 
 /.idea/*
 
