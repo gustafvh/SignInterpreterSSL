@@ -137,12 +137,12 @@ def videoStream(finalModel):
         #print('The letter is:', top_three_preds[0])
         letter, accuracy = top_three_preds[0]
 
-        if len(predictionsBuffer) >= 10 and startRecording:
+        if len(predictionsBuffer) >= 8 and startRecording:
             predictionsBuffer = predictionsBuffer[1:]
             predictionsBuffer.append(letter)
         elif startRecording:
             predictionsBuffer.append(letter)
-        if len(predictionsBuffer) >= 10:
+        if len(predictionsBuffer) >= 8:
             isEqual = all(elem == predictionsBuffer[0] for elem in predictionsBuffer)
             lastLetter = len(wordBuilder) <= 0 and '-' or wordBuilder[-1]
             if isEqual and (letter != lastLetter) and startRecording:
@@ -198,7 +198,7 @@ def videoStream(finalModel):
                     (0,255,4), 2)
 
 
-        cv2.imshow('frame', frame)
+        cv2.imshow('SignInterpreterSSL', frame)
         # cv2.waitKey(30)
 
         cv2.imwrite('singleFrame.png', frame)
@@ -211,7 +211,7 @@ def videoStream(finalModel):
 
 def mainPipeline():
     
-    finalModel = loadModelFromFile('../../best-models/hearty-night-192.h5')
+    finalModel = loadModelFromFile('../../best-models/dark-snowball-202.h5')
     videoStream(finalModel)
     #imagePath = '../data/test-images/G/G.jpg'
     #predictions = predictSingleImage(imagePath, finalModel)[0]

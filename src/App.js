@@ -13,7 +13,6 @@ import cameraIcon from "./assets/icons/camera-icon.png";
 import checkIcon from "./assets/icons/check-icon.png";
 import crossIcon from "./assets/icons/cross-icon.png";
 import signPerson from "./assets/images/sign-person-overlay.png";
-import questionMark from "./assets/icons/question-mark-icon.png";
 
 
 

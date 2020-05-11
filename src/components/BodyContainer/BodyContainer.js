@@ -57,7 +57,7 @@ export default class BodyContainer extends Component {
           loading: false
         });
         console.log("Response from API:" + response.data.predictions)
-      }).then(this.setState({ loading: false }));
+      });
     }
     catch(error) {
       console.log(error)
