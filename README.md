@@ -81,8 +81,6 @@ You can view that API repository here: https://github.com/gustafvh/sign-interpre
 <img src="docs/cloud-architecture.png" alt="cloud-architecture"
 	title="cloud-architecture" width="600" />
 
-<img src="docs/cloud-architecture.png" alt="cloud-architecture"
-	title="cloud-architecture" width="600" />
 Try the app here: https://sign-interpreter-ssl.herokuapp.com/
 
 Watch demo of final result here (only of model): https://drive.google.com/file/d/1w41VtaLMaOe6w_Z0_XVI1TQEAPPsmwIV/view?usp=sharing 
