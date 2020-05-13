@@ -3,7 +3,16 @@ Deep Neural Network for predicting Swedish Sign Language Signs that utilises CNN
 
 By [Gustaf Halvardsson](https://github.com/gustafvh) & [Johanna Peterson](https://github.com/johannakin) 
 
+<img src="docs/app-start-page.png" alt="app-start-page"
+	title="app-start-page" width="400" />
+
 Try the app here: https://sign-interpreter-ssl.herokuapp.com/
+
+
+<img src="docs/video-alpha.png" alt="video-alpha"
+	title="video-alpha" width="400" />
+
+Watch demo of final result here (only of model): https://drive.google.com/file/d/1w41VtaLMaOe6w_Z0_XVI1TQEAPPsmwIV/view?usp=sharing 
 
 # Model
 The goal of this project was to utlise transfer learning and CNN to identify 26 letters from the Swedish Sign Language Alphabet despite access to limited data. By freezing the first layers of the **[InceptionV3](https://github.com/tensorflow/models/tree/master/research/inception)** base-model we could utlise its ability to detetct low-level features and then retrain the remaing layers using our own data. 
@@ -14,13 +23,31 @@ The goal of this project was to utlise transfer learning and CNN to identify 26 
 - **Weights & Biases**. Used for helping visualising models performance and which hyperparameters to tune. 
 - **OpenCV**. Used for image processing.
 
-## Network architecture
+## Reaching the Final Network architecture
 
-TBD
+When choosing the pre-trained models for transfer learning, InceptionV3 and Xception were considered. They were evaluated with two different optimization algorithms, Mini-batch Gradient Descent and Adam. They were tested with both combinations to make sure any potential difference was statistically significant. For that the [Wilcoxon Signed Rank Test](https://en.wikipedia.org/wiki/Wilcoxon_signed-rank_test) was used. This established the InceptionV3 with mini-batch gradient descent as the most performant model. You can see the comparison below. Please note that all accuracy displayed in the graphs is on the validation dataset. 
+
+<img src="docs/box-plot.png" alt="box-plot"
+	title="box-plot" width="400" />
+	
+After that the hyperparameters were tuned and the final model used a step-size-factor of 1.2 and freezed five layers of the pre-trained model. 
+
+<img src="docs/hyperparam_graph.png" alt="hyperparam_graph.png"
+	title="hyperparam_graph.png" width="400" />
 
 ## Performance & Results
 
-TBD
+The final **testing accuracy** on the testing datatset was **85%**. 
+
+The final model consisted of **316 layers**, **25.5 million parameters**. 
+
+This is its performance during its training routine. 
+
+<img src="docs/accuracy-final-graph.png" alt="accuracy-final-graph"
+	title="accuracy-final-graph" width="400" />
+	
+You can find and use the final model architecture here:
+https://app.wandb.ai/sign-interpretor/sign-interpreter/runs/y11of78x/files/model-best.h5
 
 # Frontend
 
@@ -54,7 +81,11 @@ You can view that API repository here: https://github.com/gustafvh/sign-interpre
 <img src="docs/cloud-architecture.png" alt="cloud-architecture"
 	title="cloud-architecture" width="600" />
 
+<img src="docs/cloud-architecture.png" alt="cloud-architecture"
+	title="cloud-architecture" width="600" />
 Try the app here: https://sign-interpreter-ssl.herokuapp.com/
+
+Watch demo of final result here (only of model): https://drive.google.com/file/d/1w41VtaLMaOe6w_Z0_XVI1TQEAPPsmwIV/view?usp=sharing 
 
 ## Plans for future work
 - Smartphone responsive
