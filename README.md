@@ -3,6 +3,8 @@ Deep Neural Network for predicting Swedish Sign Language Signs that utilises CNN
 
 By [Gustaf Halvardsson](https://github.com/gustafvh) & [Johanna Peterson](https://github.com/johannakin) 
 
+(Please observe that the **backend-server may be down periodically** because of budget-constraints as students)
+
 <img src="docs/app-start-page.png" alt="app-start-page"
 	title="app-start-page" width="400" />
 
@@ -82,6 +84,7 @@ You can view that API repository here: https://github.com/gustafvh/sign-interpre
 	title="cloud-architecture" width="600" />
 
 Try the app here: https://sign-interpreter-ssl.herokuapp.com/
+(Please observe that the backend-server may be down periodically because of budget-constraints as students)
 
 Watch demo of final result here (only of model): https://drive.google.com/file/d/1w41VtaLMaOe6w_Z0_XVI1TQEAPPsmwIV/view?usp=sharing 
 
