@@ -5,8 +5,8 @@ By [Gustaf Halvardsson](https://github.com/gustafvh) & [Johanna Peterson](https:
 
 (Please observe that the **backend-server may be down periodically** because of budget-constraints as students)
 
-<img src="docs/app-start-page.png" alt="app-start-page"
-	title="app-start-page" width="400" />
+<img src="docs/SignInterpreterWebappDemo.gif" alt="app-start-page"
+	title="app-start-page" width="600" />
 
 Try the app here: https://sign-interpreter-ssl.herokuapp.com/
 
